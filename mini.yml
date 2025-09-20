@@ -1,0 +1,116 @@
+metadata:
+ 
+  title: Jasper Mini
+
+  authors:
+    Created:
+      name: T4
+      date: 2025-09-20
+
+  template:
+    name: din-6771
+    sheetsize: A3
+
+templates: 
+  - &lucas
+    type: Lucas
+    subtype: male
+  - &lucas_wire_bundle
+    category: bundle
+    colors: [BK, RD, YE, GN]
+    gauge: 0.5 mm2
+  - &relay
+    type: relay
+    subtype: male
+    pins: [87,30,85,86] # tbc
+    pinlabels: [VIN,VOUT,COIL-,COIL+]
+
+connectors:
+  fusebox:
+    <<: *lucas # copying items from the template
+    pinlabels: 
+      # constant 12v
+      - HORN
+      - FAN
+      - DOME
+      - HAZARD
+      - RADIO
+      - CIG-LIGHTER
+      - DOOR
+      - BRAKE
+      - HEADLIGHTS
+      - TRUNK
+      # IGN-1
+      - RADIO-IGN
+      - HEAT
+      - FUEL-PUMP
+      - CHOKE
+      - WINDOW
+      - TURN-SIG
+      # IGN-2
+      - GAUGES
+      - CRUISE
+      - WIPERS
+      # solo-fuse
+      - COIL
+      # incoming
+      - SOLENOID-PWR
+      - IGN-SW
+      - ALT-PWR
+  column_ignition_m:
+    <<: *lucas
+    pinlabels: [+12V, R1, R2, START]
+  column_ignition_f:
+    <<: *lucas
+    subtype: female
+    pinlabels: [+12V, R1, R2, START]
+  relay_ignition_1:
+    <<: *relay
+  relay_ignition_2:
+    <<: *relay
+  relay_headlights_low:
+    <<: *relay
+  relay_headlights_high:
+    <<: *relay
+  relay_horn:
+    <<: *relay
+
+
+
+cables:
+  ignition:
+    <<: *lucas_wire_bundle
+    category: bundle
+    colors: [BN, GNWH, WH, WHRD]
+  col_ign_cable:
+    <<: *lucas_wire_bundle
+    category: bundle
+    colors: [RD, RD, RD, WH]
+    wirelabels: [FUSETBC,IGN-SW-IGN,IGN-SW-ACC,START]
+  fusebox_relay_cable:
+    <<: *lucas_wire_bundle
+    category: bundle
+    colors: [RD, RD, GN, WH]
+    wirelabels: [IGN-SW,ALT-PWR,HEADLIGHT,HORN]    
+
+connections:
+  -
+    - fusebox: [BRAKE]
+    - col_ign_cable: [FUSETBC]
+    - column_ignition_f: [+12V]
+  -
+    - column_ignition_m: [1-4]
+    - ignition: [1-4]
+  -
+    - column_ignition_f
+    - <==>
+    - column_ignition_m
+  -
+    - fusebox: [IGN-SW]
+    - fusebox_relay_cable: [IGN-SW]
+    - relay_ignition_1: [VIN]
+  -
+    - fusebox: [ALT-PWR]
+    - fusebox_relay_cable: [ALT-PWR]
+    - relay_ignition_2: [VIN]
+
