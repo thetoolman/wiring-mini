@@ -79,7 +79,12 @@ connectors:
   front_end_connector:
     <<: *dt_connector
     subtype: female
-    pinlabels: [LEFT,RIGHT,SIDELIGHTS,LOW_BEAM,HIGH_BEAM,HORN]
+    pinlabels: [LEFT,RIGHT,SIDELIGHTS,LOW_BEAM,HIGH_BEAM,HORN,BONNET-SENSE,LED-5v,LED-DATA]
+
+  upstream_virtual:
+    <<: *dt_connector
+    subtype: female
+    pinlabels: [LEFT,RIGHT,SIDELIGHT-PWR,LOW_BEAM-SIG,HIGH_BEAM-SIG,HORN-SIG, START-SIG]
 
   relay_ignition_1:
     <<: *relay
@@ -102,20 +107,23 @@ cables:
   col_ign_cable:
     <<: *lucas_wire_bundle
     category: bundle
-    colors: [RD, RD, RD, WH]
-    wirelabels: [CHOKE-PWR,IGN-SW-IGN,IGN-SW-ACC,START]
+    colors: [RD, GN, WH, WH]
+    wirelabels: [CHOKE-PWR,R1,R2,START]
   fusebox_relay_cable:
     <<: *lucas_wire_bundle
     category: bundle
-    colors: [RD, RD, RD, GN, OG, BN]
+    colors: [RD, RD, RD, GN, BN, OG]
     wirelabels: [IGN-SW,ALT-PWR,HEADLIGHTS,HORN,IGN-SW-IGN,IGN-SW-ACC]
   front_end_cable:
     <<: *lucas_wire_bundle
     category: bundle
     colors: [LB, BU, BN, BG, GN, OL]
     wirelabels: [LEFT,RIGHT,SIDELIGHTS,LOW_BEAM,HIGH_BEAM,HORN]    
-
-  single-wire:
+  signal:
+    gauge: 0.5 mm2
+    colors: [BG, GN, OL]
+    wirelabels: [LOW_BEAM,HIGH_BEAM,HORN]   
+  wire:
     gauge: 0.5 mm2
     colors: [RD]
 
@@ -125,14 +133,14 @@ connections:
     - col_ign_cable: [CHOKE-PWR]
     - column_ignition_f: [+12V]
   -
-    - col_ign_cable: [START, IGN-SW-IGN, IGN-SW-ACC]
+    - col_ign_cable: [START, R1, R2]
     - column_ignition_f: [START, R1, R2]    
   -
     - relay_ignition_1: [COIL+]  
-    - col_ign_cable: [IGN-SW-IGN]
+    - col_ign_cable: [R1]
   -
     - relay_ignition_2: [COIL+]  
-    - col_ign_cable: [IGN-SW-ACC]    
+    - col_ign_cable: [R2]    
   -
     - column_ignition_m: [1-4]
     - ignition: [1-4]
@@ -153,7 +161,6 @@ connections:
     - fusebox_relay_cable: [HEADLIGHTS]  
     - relay_headlights_low: [VIN]
   -
-    - fusebox: [HEADLIGHTS]
     - fusebox_relay_cable: [HEADLIGHTS]  
     - relay_headlights_high: [VIN]
   -
@@ -172,3 +179,21 @@ connections:
   -
     - relay_horn: [VOUT]
     - front_end_cable: [HORN]
+  -  
+    - upstream_virtual: [LEFT, RIGHT, SIDELIGHT-PWR]
+    - front_end_cable: [LEFT, RIGHT, SIDELIGHTS]
+  -  
+    - upstream_virtual: [START-SIG]
+    - col_ign_cable: [START]
+  -  
+    - upstream_virtual: [LOW_BEAM-SIG]
+    - signal: [1]
+    - relay_headlights_low: [COIL+]
+  -  
+    - upstream_virtual: [HIGH_BEAM-SIG]
+    - signal: [2]
+    - relay_headlights_high: [COIL+]
+  -  
+    - upstream_virtual: [HORN-SIG]
+    - signal: [3]
+    - relay_horn: [COIL+]
