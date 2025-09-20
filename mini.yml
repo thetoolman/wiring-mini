@@ -17,19 +17,31 @@ templates:
     subtype: male
   - &lucas_wire_bundle
     category: bundle
-    colors: [BK, RD, YE, GN]
     gauge: 0.5 mm2
+  - &dt_connector
+    type: DT-style connector
+    subtype: male
+  - &ez-wire
+    category: bundle
+    gauge: 0.5 mm2    
   - &relay
     type: relay
     subtype: male
-    pins: [87,30,85,86] # tbc
-    pinlabels: [VIN,VOUT,COIL-,COIL+]
+    pins: [30,87,86,85]
+    pinlabels: [VIN,VOUT,COIL+,COIL-]
 
 connectors:
+  junction:
+    style: simple
+    type: ferrule
   fusebox:
     <<: *lucas # copying items from the template
     pinlabels: 
+      # extra unfused 12V constant to use
+      - IGN-SW
+      - ALT-PWR
       # constant 12v
+      - SOLENOID-PWR
       - HORN
       - FAN
       - DOME
@@ -41,6 +53,7 @@ connectors:
       - HEADLIGHTS
       - TRUNK
       # IGN-1
+      - IGN-SW-IGN
       - RADIO-IGN
       - HEAT
       - FUEL-PUMP
@@ -48,15 +61,13 @@ connectors:
       - WINDOW
       - TURN-SIG
       # IGN-2
+      - IGN-SW-ACC
       - GAUGES
       - CRUISE
       - WIPERS
       # solo-fuse
       - COIL
-      # incoming
-      - SOLENOID-PWR
-      - IGN-SW
-      - ALT-PWR
+
   column_ignition_m:
     <<: *lucas
     pinlabels: [+12V, R1, R2, START]
@@ -64,6 +75,12 @@ connectors:
     <<: *lucas
     subtype: female
     pinlabels: [+12V, R1, R2, START]
+
+  front_end_connector:
+    <<: *dt_connector
+    subtype: female
+    pinlabels: [LEFT,RIGHT,SIDELIGHTS,LOW_BEAM,HIGH_BEAM,HORN]
+
   relay_ignition_1:
     <<: *relay
   relay_ignition_2:
@@ -86,18 +103,30 @@ cables:
     <<: *lucas_wire_bundle
     category: bundle
     colors: [RD, RD, RD, WH]
-    wirelabels: [FUSETBC,IGN-SW-IGN,IGN-SW-ACC,START]
+    wirelabels: [CHOKE-PWR,IGN-SW-IGN,IGN-SW-ACC,START]
   fusebox_relay_cable:
     <<: *lucas_wire_bundle
     category: bundle
-    colors: [RD, RD, GN, WH]
-    wirelabels: [IGN-SW,ALT-PWR,HEADLIGHT,HORN]    
+    colors: [RD, RD, RD, GN, OG, BN]
+    wirelabels: [IGN-SW,ALT-PWR,HEADLIGHTS,HORN,IGN-SW-IGN,IGN-SW-ACC]
+  single-wire:
+    gauge: 0.5 mm2
+    colors: [RD]
 
 connections:
   -
     - fusebox: [BRAKE]
-    - col_ign_cable: [FUSETBC]
+    - col_ign_cable: [CHOKE-PWR]
     - column_ignition_f: [+12V]
+  -
+    - col_ign_cable: [START, IGN-SW-IGN, IGN-SW-ACC]
+    - column_ignition_f: [START, R1, R2]    
+  -
+    - relay_ignition_1: [COIL+]  
+    - col_ign_cable: [IGN-SW-IGN]
+  -
+    - relay_ignition_2: [COIL+]  
+    - col_ign_cable: [IGN-SW-ACC]    
   -
     - column_ignition_m: [1-4]
     - ignition: [1-4]
@@ -106,11 +135,24 @@ connections:
     - <==>
     - column_ignition_m
   -
-    - fusebox: [IGN-SW]
-    - fusebox_relay_cable: [IGN-SW]
-    - relay_ignition_1: [VIN]
+    - fusebox: [IGN-SW, IGN-SW-IGN]
+    - fusebox_relay_cable: [IGN-SW, IGN-SW-IGN]
+    - relay_ignition_1: [VIN, VOUT]
   -
-    - fusebox: [ALT-PWR]
-    - fusebox_relay_cable: [ALT-PWR]
-    - relay_ignition_2: [VIN]
-
+    - fusebox: [ALT-PWR, IGN-SW-ACC]
+    - fusebox_relay_cable: [ALT-PWR, IGN-SW-ACC]
+    - relay_ignition_2: [VIN, VOUT]
+  -
+    - fusebox: [HEADLIGHTS]
+    - fusebox_relay_cable: [HEADLIGHTS]  
+    - relay_headlights_low: [VIN]
+  -
+    - fusebox: [HEADLIGHTS]
+    - fusebox_relay_cable: [HEADLIGHTS]  
+    - relay_headlights_high: [VIN]
+  -
+    - fusebox: [HORN]
+    - fusebox_relay_cable: [HORN]  
+    - relay_horn: [VIN]
+  - 
+    - front_end_connector
