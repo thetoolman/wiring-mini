@@ -4,10 +4,14 @@ Id	Description	Qty	Unit	Designators
 3	Connector, Lucas, male, 25 pins	1		fusebox
 4	Connector, Lucas, male, 4 pins	1		column_ignition_m
 5	Connector, relay, male, 4 pins	5		relay_headlights_high, relay_headlights_low, relay_horn, relay_ignition_1, relay_ignition_2
-6	Wire, 0.5 mm², BN	0	m	fusebox_relay_cable, ignition
-7	Wire, 0.5 mm², GN	0	m	fusebox_relay_cable
-8	Wire, 0.5 mm², GNWH	0	m	ignition
-9	Wire, 0.5 mm², OG	0	m	fusebox_relay_cable
-10	Wire, 0.5 mm², RD	0	m	col_ign_cable, fusebox_relay_cable
-11	Wire, 0.5 mm², WH	0	m	col_ign_cable, ignition
-12	Wire, 0.5 mm², WHRD	0	m	ignition
+6	Wire, 0.5 mm², BG	0	m	front_end_cable
+7	Wire, 0.5 mm², BN	0	m	front_end_cable, fusebox_relay_cable, ignition
+8	Wire, 0.5 mm², BU	0	m	front_end_cable
+9	Wire, 0.5 mm², GN	0	m	front_end_cable, fusebox_relay_cable
+10	Wire, 0.5 mm², GNWH	0	m	ignition
+11	Wire, 0.5 mm², LB	0	m	front_end_cable
+12	Wire, 0.5 mm², OG	0	m	fusebox_relay_cable
+13	Wire, 0.5 mm², OL	0	m	front_end_cable
+14	Wire, 0.5 mm², RD	0	m	col_ign_cable, fusebox_relay_cable
+15	Wire, 0.5 mm², WH	0	m	col_ign_cable, ignition
+16	Wire, 0.5 mm², WHRD	0	m	ignition

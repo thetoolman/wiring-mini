@@ -109,6 +109,12 @@ cables:
     category: bundle
     colors: [RD, RD, RD, GN, OG, BN]
     wirelabels: [IGN-SW,ALT-PWR,HEADLIGHTS,HORN,IGN-SW-IGN,IGN-SW-ACC]
+  front_end_cable:
+    <<: *lucas_wire_bundle
+    category: bundle
+    colors: [LB, BU, BN, BG, GN, OL]
+    wirelabels: [LEFT,RIGHT,SIDELIGHTS,LOW_BEAM,HIGH_BEAM,HORN]    
+
   single-wire:
     gauge: 0.5 mm2
     colors: [RD]
@@ -155,4 +161,14 @@ connections:
     - fusebox_relay_cable: [HORN]  
     - relay_horn: [VIN]
   - 
-    - front_end_connector
+    - front_end_cable: [1-6]
+    - front_end_connector: [1-6]
+  -
+    - relay_headlights_low: [VOUT]
+    - front_end_cable: [LOW_BEAM]
+  -
+    - relay_headlights_high: [VOUT]
+    - front_end_cable: [HIGH_BEAM]
+  -
+    - relay_horn: [VOUT]
+    - front_end_cable: [HORN]
