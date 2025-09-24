@@ -86,6 +86,12 @@ connectors:
     subtype: female
     pinlabels: [LEFT,RIGHT,SIDELIGHT-PWR,LOW_BEAM-SIG,HIGH_BEAM-SIG,HORN-SIG, START-SIG]
 
+  upstream_virtual_fusebox:
+    <<: *dt_connector
+    subtype: female
+    pinlabels: [HEADLIGHTS]
+
+
   relay_ignition_1:
     <<: *relay
   relay_ignition_2:
@@ -107,13 +113,13 @@ cables:
   col_ign_cable:
     <<: *lucas_wire_bundle
     category: bundle
-    colors: [RD, GN, WH, WH]
-    wirelabels: [CHOKE-PWR,R1,R2,START]
+    colors: [RD, OL, WH, WHRD]
+    wirelabels: [CHOKE-PWR,(TEMP-SND)-R1,(BRAKE-SW)-R2,START]
   fusebox_relay_cable:
     <<: *lucas_wire_bundle
     category: bundle
     colors: [RD, RD, RD, GN, BN, OG]
-    wirelabels: [IGN-SW,ALT-PWR,HEADLIGHTS,HORN,IGN-SW-IGN,IGN-SW-ACC]
+    wirelabels: [IGN-SW,ALT-PWR,ALT-PWR-2,HORN-SW,IGN-SW-IGN,IGN-SW-ACC]
   front_end_cable:
     <<: *lucas_wire_bundle
     category: bundle
@@ -123,6 +129,10 @@ cables:
     gauge: 0.5 mm2
     colors: [BG, GN, OL]
     wirelabels: [LOW_BEAM,HIGH_BEAM,HORN]   
+  v-fusebox-cable:
+    gauge: 0.5 mm2
+    colors: [RD]
+    wirelabels: [HEADLIGHTS]       
   wire:
     gauge: 0.5 mm2
     colors: [RD]
@@ -133,21 +143,21 @@ connections:
     - col_ign_cable: [CHOKE-PWR]
     - column_ignition_f: [+12V]
   -
-    - col_ign_cable: [START, R1, R2]
+    - col_ign_cable: [START, (TEMP-SND)-R1,(BRAKE-SW)-R2]
     - column_ignition_f: [START, R1, R2]    
   -
     - relay_ignition_1: [COIL+]  
-    - col_ign_cable: [R1]
+    - col_ign_cable: [(TEMP-SND)-R1]
   -
     - relay_ignition_2: [COIL+]  
-    - col_ign_cable: [R2]    
+    - col_ign_cable: [(BRAKE-SW)-R2]    
   -
     - column_ignition_m: [1-4]
     - ignition: [1-4]
-  -
-    - column_ignition_f
-    - <==>
-    - column_ignition_m
+  # -
+  #   - column_ignition_f
+  #   - <==>
+  #   - column_ignition_m
   -
     - fusebox: [IGN-SW, IGN-SW-IGN]
     - fusebox_relay_cable: [IGN-SW, IGN-SW-IGN]
@@ -158,14 +168,14 @@ connections:
     - relay_ignition_2: [VIN, VOUT]
   -
     - fusebox: [HEADLIGHTS]
-    - fusebox_relay_cable: [HEADLIGHTS]  
+    - fusebox_relay_cable: [ALT-PWR-2]  
     - relay_headlights_low: [VIN]
   -
-    - fusebox_relay_cable: [HEADLIGHTS]  
+    - fusebox_relay_cable: [ALT-PWR-2]  
     - relay_headlights_high: [VIN]
   -
     - fusebox: [HORN]
-    - fusebox_relay_cable: [HORN]  
+    - fusebox_relay_cable: [HORN-SW]  
     - relay_horn: [VIN]
   - 
     - front_end_cable: [1-6]
@@ -197,3 +207,11 @@ connections:
     - upstream_virtual: [HORN-SIG]
     - signal: [3]
     - relay_horn: [COIL+]
+  -  
+    - fusebox: [HEADLIGHTS]
+    - v-fusebox-cable: [HEADLIGHTS]  
+    - upstream_virtual_fusebox: [HEADLIGHTS]  
+  -  
+    - upstream_virtual_fusebox.twin 
+  -  
+    - upstream_virtual.copy 
