@@ -70,11 +70,21 @@ connectors:
 
   column_ignition_m:
     <<: *lucas
+    notes: BMC column igntion
     pinlabels: [+12V, R1, R2, START]
   column_ignition_f:
     <<: *lucas
     subtype: female
     pinlabels: [+12V, R1, R2, START]
+  column_lights_indicators_m:
+    <<: *lucas
+    notes: 'BMC column indicator/hi-lo/horn stalk'
+    pinlabels: [RIGHT-SIG,HORN-12v,HL-12v,LO-SIG,LEFT-SIG,HORN-SIG,IND-12v,NC,HI-SIG]
+  column_lights_indicators_f:
+    <<: *lucas
+    subtype: female
+    notes: 'loom indicator/hi-lo/horn stalk'
+    pinlabels: [RIGHT-SIG,HORN-12v,HL-12v,LO-SIG,LEFT-SIG,HORN-SIG,IND-12v,NC,HI-SIG]
 
   front_end_connector:
     <<: *dt_connector
@@ -89,7 +99,16 @@ connectors:
   upstream_virtual_fusebox:
     <<: *dt_connector
     subtype: female
-    pinlabels: [HEADLIGHTS]
+    pinlabels: [HORN,TURN-SIG, HEADLIGHTS]
+
+  headlight_dash_switch:
+    <<: *dt_connector
+    pinlabels: [IN, ILLUM-OUT, MAIN-OUT]
+
+
+  hazard_dash_switch:
+    <<: *dt_connector
+    pinlabels: [IND-RELAY-IN,HAZARD-LAMP-12v,RIGHT-SIG, HAZ-RELAY-IN, LEFT-SIG, IND-RELAY-OUT]
 
 
   relay_ignition_1:
@@ -109,17 +128,34 @@ cables:
   ignition:
     <<: *lucas_wire_bundle
     category: bundle
-    colors: [BN, GNWH, WH, WHRD]
+    colors: [BN, GNWH, WH, WHRD]    
   col_ign_cable:
     <<: *lucas_wire_bundle
     category: bundle
     colors: [RD, OL, WH, WHRD]
     wirelabels: [CHOKE-PWR,(TEMP-SND)-R1,(BRAKE-SW)-R2,START]
+
+  col_ind_hilo_horn_stalk_cable:
+    <<: *lucas_wire_bundle
+    category: bundle
+    wirelabels: [RIGHT-SIG,HORN-12v,HL-12v,LO-SIG,LEFT-SIG,HORN-SIG,IND-12v,HI-SIG]
+    colors:     [GNWH     ,      VT,    BU,BUWH ,GNRD    ,VTBK    ,GNBN   ,BURD   ]
+
   fusebox_relay_cable:
     <<: *lucas_wire_bundle
     category: bundle
     colors: [RD, RD, RD, GN, BN, OG]
     wirelabels: [IGN-SW,ALT-PWR,ALT-PWR-2,HORN-SW,IGN-SW-IGN,IGN-SW-ACC]
+  fusebox-to-ind-hl-horn_cable:
+    <<: *lucas_wire_bundle
+    category: bundle
+    wirelabels: [HORN-SW, TURN-SIG, HL-12v]
+    colors: [GN,RD,RD]
+  fusebox-to-switches:
+    <<: *lucas_wire_bundle
+    category: bundle
+    wirelabels: [HORN-SW, HEADLIGHTS]
+    colors: [GN,RD]
   front_end_cable:
     <<: *lucas_wire_bundle
     category: bundle
@@ -131,8 +167,8 @@ cables:
     wirelabels: [LOW_BEAM,HIGH_BEAM,HORN]   
   v-fusebox-cable:
     gauge: 0.5 mm2
-    colors: [RD]
-    wirelabels: [HEADLIGHTS]       
+    colors: [GN, RD, RD] 
+    wirelabels: [HORN-SW, HEADLIGHTS,TURN-SIG]       
   wire:
     gauge: 0.5 mm2
     colors: [RD]
@@ -208,10 +244,26 @@ connections:
     - signal: [3]
     - relay_horn: [COIL+]
   -  
-    - fusebox: [HEADLIGHTS]
-    - v-fusebox-cable: [HEADLIGHTS]  
-    - upstream_virtual_fusebox: [HEADLIGHTS]  
-  -  
-    - upstream_virtual_fusebox.twin 
-  -  
-    - upstream_virtual.copy 
+    - fusebox: [HORN, HEADLIGHTS,TURN-SIG]
+    - v-fusebox-cable: [1-3]  
+    - upstream_virtual_fusebox: [1-3]  
+  - 
+    - upstream_virtual_fusebox.upstream_virtual_fusebox-pair: [TURN-SIG, HEADLIGHTS]
+    - fusebox-to-switches: [HORN-SW, HEADLIGHTS]
+  -
+    - fusebox-to-switches: [HEADLIGHTS]
+    - headlight_dash_switch: [IN]
+  
+  - 
+    - upstream_virtual.upstream_virtual-pair
+  - 
+    - column_lights_indicators_m: [1-7,9]
+    - col_ind_hilo_horn_stalk_cable: [1-8]
+  - 
+    - headlight_dash_switch: [MAIN-OUT]
+    - fusebox-to-ind-hl-horn_cable: [3]
+    - column_lights_indicators_f: [HL-12v]
+  - 
+    - upstream_virtual_fusebox-pair: [HORN,TURN-SIG]
+    - fusebox-to-ind-hl-horn_cable: [1,2]
+    - column_lights_indicators_f: [HORN-12v, IND-12v]
