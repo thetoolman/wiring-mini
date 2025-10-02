@@ -171,12 +171,12 @@ connectors:
 
 
 # VIRTUAL CONNECTORS
-  upstream_virtual:
+  virtual_stalk:
     <<: *dt_connector
     subtype: female
     pinlabels: [LEFT,RIGHT,SIDELIGHT-PWR,LOW_BEAM-SIG,HIGH_BEAM-SIG,HORN-SIG, START-SIG]
 
-  upstream_virtual_fusebox:
+  virtual_fusebox_A:
     <<: *dt_connector
     subtype: female
     pinlabels: [HORN, HEADLIGHTS,TURN-SIG,HAZARD,AC-HEAT-PWR]
@@ -241,15 +241,17 @@ cables:
   signal:
     gauge: 0.5 mm2
     colors: [BG, GN, OL]
-    wirelabels: [LOW_BEAM,HIGH_BEAM,HORN]   
-  v-fusebox-cable:
-    gauge: 0.5 mm2
-    colors: [GN, RD, RD,BK] 
-    wirelabels: [HORN-SW, HEADLIGHT-PWR,TURN-SIG,AC-HEAT-PWR]       
+    wirelabels: [LOW_BEAM,HIGH_BEAM,HORN] 
   virtual-switch-to-x:
     gauge: 0.5 mm2
     colors: [BK] 
-    wirelabels: [AC]   
+    wirelabels: [AC] 
+
+  virtual_fusebox_cable_A:
+    gauge: 0.5 mm2
+    colors: [GN, RD, RD,BK] 
+    wirelabels: [HORN-SW, HEADLIGHT-PWR,TURN-SIG,AC-HEAT-PWR]       
+  
 
 
 #
@@ -281,18 +283,40 @@ connections:
     - relay_horn: [VIN]
   -  
     - fusebox: [HORN, HEADLIGHTS,TURN-SIG,AC-HEAT]
-    - v-fusebox-cable: [1-4]  
-    - upstream_virtual_fusebox: [1-4] 
+    - virtual_fusebox_cable_A: [1-4]  
+    - virtual_fusebox_A: [1-4] 
 
+# SWITCHES
+
+  - 
+    - hazard_dash_switch: [IND-RELAY-OUT]
+    - fusebox-to-ind-hl-horn_cable: [TURN-SIG]
+    - column_lights_indicators_f: [IND-12v]
+  - 
+    - column_lights_indicators_m: [1-7,9]
+    - col_ind_hilo_horn_stalk_cable: [1-8]
+  - 
+    - headlight_dash_switch: [MAIN-OUT]
+    - fusebox-to-ind-hl-horn_cable: [HL-12v]
+    - column_lights_indicators_f: [HL-12v]
+  -
+    - fusebox-to-switches: [AC-HEAT-PWR]
+    - rear_demist_dash_switch: [IN]
+  -
+    - rear_demist_dash_switch: [OUT]
+    - virtual-switch-to-x: [AC]
+  -
+    - fusebox-to-switches: [HEADLIGHT-PWR]
+    - headlight_dash_switch: [IN]  
 
   # COLUMN  
   -
     - col_ign_cable: [START, (TEMP-SND)-R1,(BRAKE-SW)-R2]
     - column_ignition_f: [START, R1, R2]
-  -
-    - column_ignition_f
-    - <==>
-    - column_ignition_m
+  # -
+  #   - column_ignition_f
+  #   - <==>
+  #   - column_ignition_m
   -
     - column_ignition_m: [1-4]
     - ignition: [1-4]
@@ -311,15 +335,15 @@ connections:
     - relay_ignition_2: [COIL+]  
     - col_ign_cable: [(BRAKE-SW)-R2]    
   -  
-    - upstream_virtual: [HORN-SIG]
+    - virtual_stalk: [HORN-SIG]
     - signal: [3]
     - relay_horn: [COIL+]
   -  
-    - upstream_virtual: [LOW_BEAM-SIG]
+    - virtual_stalk: [LOW_BEAM-SIG]
     - signal: [1]
     - relay_headlights_low: [COIL+]
   -  
-    - upstream_virtual: [HIGH_BEAM-SIG]
+    - virtual_stalk: [HIGH_BEAM-SIG]
     - signal: [2]
     - relay_headlights_high: [COIL+]
 
@@ -362,52 +386,40 @@ connections:
 
 
   # VIRTUAL
+  - 
+    - virtual_stalk.virtual_stalk-clone
+  # -
+  #   - virtual_stalk-clone
+  #   - <==>
+  #   - virtual_stalk
   -  
-    - upstream_virtual: [LEFT, RIGHT, SIDELIGHT-PWR]
+    - virtual_stalk: [LEFT, RIGHT, SIDELIGHT-PWR]
     - front_end_cable: [LEFT, RIGHT, SIDELIGHTS]
   -  
-    - upstream_virtual: [START-SIG]
+    - virtual_stalk: [START-SIG]
     - col_ign_cable: [START]
-  - 
-    - upstream_virtual.upstream_virtual-pair
-
 
   - 
-    - upstream_virtual_fusebox.upstream_virtual_fusebox-pair: [HEADLIGHTS, AC-HEAT-PWR]
+    - virtual_fusebox_A.virtual_fusebox_A-clone
+  # -
+  #   - virtual_fusebox_A
+  #   - <==>
+  #   - virtual_fusebox_A-clone
+  - 
+    - virtual_fusebox_A-clone: [HEADLIGHTS, AC-HEAT-PWR]
     - fusebox-to-switches: [HEADLIGHT-PWR,AC-HEAT-PWR]
-
   - 
-    - hazard_dash_switch: [IND-RELAY-OUT]
-    - fusebox-to-ind-hl-horn_cable: [TURN-SIG]
-    - column_lights_indicators_f: [IND-12v]
-  - 
-    - column_lights_indicators_m: [1-7,9]
-    - col_ind_hilo_horn_stalk_cable: [1-8]
-  - 
-    - headlight_dash_switch: [MAIN-OUT]
-    - fusebox-to-ind-hl-horn_cable: [HL-12v]
-    - column_lights_indicators_f: [HL-12v]
-  - 
-    - upstream_virtual_fusebox-pair: [HORN]
+    - virtual_fusebox_A-clone: [HORN]
     - fusebox-to-ind-hl-horn_cable: [HORN-SW]
     - column_lights_indicators_f: [HORN-12v]
-
-  -
-    - fusebox-to-switches: [AC-HEAT-PWR]
-    - rear_demist_dash_switch: [IN]
-  -
-    - rear_demist_dash_switch: [OUT]
-    - virtual-switch-to-x: [AC]
-
-
-    
-  -
-    - fusebox-to-switches: [HEADLIGHT-PWR]
-    - headlight_dash_switch: [IN]  
-
   - 
-    - upstream_virtual_fusebox-pair: [TURN-SIG, HAZARD]
+    - virtual_fusebox_A-clone: [TURN-SIG, HAZARD]
     - fusebox-to-blinkers: [TURN-SIG, HAZARD]
+
+
+
+
+
 
 
   

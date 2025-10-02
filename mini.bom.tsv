@@ -1,9 +1,9 @@
 Id	Description	Qty	Unit	Designators
 1	Cable, 1 x 0.5 mm²	0	m	virtual-switch-to-x
 2	Cable, 3 x 0.5 mm²	0	m	signal
-3	Cable, 4 x 0.5 mm²	0	m	v-fusebox-cable
-4	Connector, DT-style connector, female, 5 pins	2		upstream_virtual_fusebox, upstream_virtual_fusebox-pair
-5	Connector, DT-style connector, female, 7 pins	2		upstream_virtual, upstream_virtual-pair
+3	Cable, 4 x 0.5 mm²	0	m	virtual_fusebox_cable_A
+4	Connector, DT-style connector, female, 5 pins	2		virtual_fusebox_A, virtual_fusebox_A-clone
+5	Connector, DT-style connector, female, 7 pins	2		virtual_stalk, virtual_stalk-clone
 6	Connector, DT-style connector, female, 9 pins	1		front_end_connector
 7	Connector, DT-style connector, male, 3 pins	1		headlight_dash_switch
 8	Connector, DT-style connector, male, 4 pins	1		rear_demist_dash_switch
