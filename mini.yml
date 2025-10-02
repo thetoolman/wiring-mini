@@ -249,10 +249,8 @@ cables:
 
   virtual_fusebox_cable_A:
     gauge: 0.5 mm2
-    colors: [GN, RD, RD,BK] 
-    wirelabels: [HORN-SW, HEADLIGHT-PWR,TURN-SIG,AC-HEAT-PWR]       
-  
-
+    colors: [GN] 
+    wirelabels: [HORN-SW]       
 
 #
 ### CONNECTIONS
@@ -282,10 +280,17 @@ connections:
     - fusebox_relay_cable: [HORN-SW]  
     - relay_horn: [VIN]
   -  
-    - fusebox: [HORN, HEADLIGHTS,TURN-SIG,AC-HEAT]
-    - virtual_fusebox_cable_A: [1-4]  
-    - virtual_fusebox_A: [1-4] 
-
+    - fusebox: [HORN]
+    - virtual_fusebox_cable_A: [1]  
+    - virtual_fusebox_A: [HORN] 
+  -  
+    - fusebox: [HEADLIGHTS,AC-HEAT]
+    - fusebox-to-switches.fusebox-to-switches-clone: [1-2]  
+    - virtual_fusebox_A: [HEADLIGHTS,AC-HEAT-PWR] 
+  -  
+    - fusebox: [TURN-SIG,HAZARD]
+    - fusebox-to-blinkers.fusebox-to-blinkers-clone: [TURN-SIG,HAZARD]  
+    - virtual_fusebox_A: [TURN-SIG,HAZARD] 
 # SWITCHES
 
   - 
@@ -398,7 +403,10 @@ connections:
   -  
     - virtual_stalk: [START-SIG]
     - col_ign_cable: [START]
-
+  -  
+    - virtual_stalk-clone: [LOW_BEAM-SIG,HIGH_BEAM-SIG,HORN-SIG]
+    - signal.signal-clone-from-column: [1-3]
+    - column_lights_indicators_f: [LO-SIG,HI-SIG,HORN-SIG]
   - 
     - virtual_fusebox_A.virtual_fusebox_A-clone
   # -
