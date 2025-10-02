@@ -1,29 +1,35 @@
 Id	Description	Qty	Unit	Designators
-1	Cable, 3 x 0.5 mm²	0	m	signal, v-fusebox-cable
-2	Connector, DT-style connector, female, 3 pins	2		upstream_virtual_fusebox, upstream_virtual_fusebox-pair
-3	Connector, DT-style connector, female, 7 pins	2		upstream_virtual, upstream_virtual-pair
-4	Connector, DT-style connector, female, 9 pins	1		front_end_connector
-5	Connector, DT-style connector, male, 3 pins	1		headlight_dash_switch
-6	Connector, Lucas, female, 4 pins	1		column_ignition_f
-7	Connector, Lucas, female, 9 pins	1		column_lights_indicators_f
-8	Connector, Lucas, male, 25 pins	1		fusebox
-9	Connector, Lucas, male, 4 pins	1		column_ignition_m
-10	Connector, Lucas, male, 9 pins	1		column_lights_indicators_m
-11	Connector, relay, male, 4 pins	5		relay_headlights_high, relay_headlights_low, relay_horn, relay_ignition_1, relay_ignition_2
-12	Wire, 0.5 mm², BG	0	m	front_end_cable
-13	Wire, 0.5 mm², BN	0	m	front_end_cable, fusebox_relay_cable, ignition
-14	Wire, 0.5 mm², BU	0	m	col_ind_hilo_horn_stalk_cable, front_end_cable
-15	Wire, 0.5 mm², BURD	0	m	col_ind_hilo_horn_stalk_cable
-16	Wire, 0.5 mm², BUWH	0	m	col_ind_hilo_horn_stalk_cable
-17	Wire, 0.5 mm², GN	0	m	front_end_cable, fusebox-to-ind-hl-horn_cable, fusebox-to-switches, fusebox_relay_cable
-18	Wire, 0.5 mm², GNBN	0	m	col_ind_hilo_horn_stalk_cable
-19	Wire, 0.5 mm², GNRD	0	m	col_ind_hilo_horn_stalk_cable
-20	Wire, 0.5 mm², GNWH	0	m	col_ind_hilo_horn_stalk_cable, ignition
-21	Wire, 0.5 mm², LB	0	m	front_end_cable
-22	Wire, 0.5 mm², OG	0	m	fusebox_relay_cable
-23	Wire, 0.5 mm², OL	0	m	col_ign_cable, front_end_cable
-24	Wire, 0.5 mm², RD	0	m	col_ign_cable, fusebox-to-ind-hl-horn_cable, fusebox-to-switches, fusebox_relay_cable
-25	Wire, 0.5 mm², VT	0	m	col_ind_hilo_horn_stalk_cable
-26	Wire, 0.5 mm², VTBK	0	m	col_ind_hilo_horn_stalk_cable
-27	Wire, 0.5 mm², WH	0	m	col_ign_cable, ignition
-28	Wire, 0.5 mm², WHRD	0	m	col_ign_cable, ignition
+1	Cable, 1 x 0.5 mm²	0	m	virtual-switch-to-x
+2	Cable, 3 x 0.5 mm²	0	m	signal
+3	Cable, 4 x 0.5 mm²	0	m	v-fusebox-cable
+4	Connector, DT-style connector, female, 5 pins	2		upstream_virtual_fusebox, upstream_virtual_fusebox-pair
+5	Connector, DT-style connector, female, 7 pins	2		upstream_virtual, upstream_virtual-pair
+6	Connector, DT-style connector, female, 9 pins	1		front_end_connector
+7	Connector, DT-style connector, male, 3 pins	1		headlight_dash_switch
+8	Connector, DT-style connector, male, 4 pins	1		rear_demist_dash_switch
+9	Connector, DT-style connector, male, 6 pins	1		hazard_dash_switch
+10	Connector, Lucas, female, 4 pins	1		column_ignition_f
+11	Connector, Lucas, female, 9 pins	1		column_lights_indicators_f
+12	Connector, Lucas, male, 25 pins	1		fusebox
+13	Connector, Lucas, male, 4 pins	1		column_ignition_m
+14	Connector, Lucas, male, 9 pins	1		column_lights_indicators_m
+15	Connector, blinker, male, 2 pins	2		blinker_hazard, blinker_indicators
+16	Connector, relay, male, 4 pins	5		relay_headlights_high, relay_headlights_low, relay_horn, relay_ignition_1, relay_ignition_2
+17	Wire, 0.5 mm², BG	0	m	front_end_cable
+18	Wire, 0.5 mm², BK	0	m	fusebox-to-switches
+19	Wire, 0.5 mm², BN	0	m	front_end_cable, fusebox_relay_cable, ignition
+20	Wire, 0.5 mm², BU	0	m	col_ind_hilo_horn_stalk_cable, front_end_cable
+21	Wire, 0.5 mm², BURD	0	m	col_ind_hilo_horn_stalk_cable
+22	Wire, 0.5 mm², BUWH	0	m	col_ind_hilo_horn_stalk_cable
+23	Wire, 0.5 mm², GN	0	m	front_end_cable, fusebox-to-ind-hl-horn_cable, fusebox_relay_cable
+24	Wire, 0.5 mm², GNBN	0	m	col_ind_hilo_horn_stalk_cable
+25	Wire, 0.5 mm², GNRD	0	m	col_ind_hilo_horn_stalk_cable
+26	Wire, 0.5 mm², GNWH	0	m	col_ind_hilo_horn_stalk_cable, ignition
+27	Wire, 0.5 mm², LB	0	m	front_end_cable
+28	Wire, 0.5 mm², OG	0	m	fusebox_relay_cable
+29	Wire, 0.5 mm², OL	0	m	col_ign_cable, front_end_cable
+30	Wire, 0.5 mm², RD	0	m	blinkers-to-switches, col_ign_cable, fusebox-to-blinkers, fusebox-to-ind-hl-horn_cable, fusebox-to-switches, fusebox_relay_cable
+31	Wire, 0.5 mm², VT	0	m	col_ind_hilo_horn_stalk_cable
+32	Wire, 0.5 mm², VTBK	0	m	col_ind_hilo_horn_stalk_cable
+33	Wire, 0.5 mm², WH	0	m	col_ign_cable, ignition
+34	Wire, 0.5 mm², WHRD	0	m	col_ign_cable, ignition

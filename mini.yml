@@ -29,6 +29,11 @@ templates:
     subtype: male
     pins: [30,87,86,85]
     pinlabels: [VIN,VOUT,COIL+,COIL-]
+  - &blinker
+    type: blinker
+    subtype: male
+    pinlabels: [12v-IN,BLINK-OUT]
+
 
 connectors:
   junction:
@@ -55,7 +60,7 @@ connectors:
       # IGN-1
       - IGN-SW-IGN
       - RADIO-IGN
-      - HEAT
+      - AC-HEAT
       - FUEL-PUMP
       - CHOKE
       - WINDOW
@@ -99,16 +104,26 @@ connectors:
   upstream_virtual_fusebox:
     <<: *dt_connector
     subtype: female
-    pinlabels: [HORN,TURN-SIG, HEADLIGHTS]
+    pinlabels: [HORN, HEADLIGHTS,TURN-SIG,HAZARD,AC-HEAT-PWR]
+
+
+  rear_demist_dash_switch:
+    <<: *dt_connector
+    pinlabels: [IN, OUT, ILLUM-IN, ILLUM-GND]
+
+
+  hazard_dash_switch:
+    <<: *dt_connector
+    pinlabels: [IND-RELAY-IN,HAZARD-LAMP-12v,RIGHT-SIG, HAZ-RELAY-IN, LEFT-SIG, IND-RELAY-OUT]
+
+
 
   headlight_dash_switch:
     <<: *dt_connector
     pinlabels: [IN, ILLUM-OUT, MAIN-OUT]
 
 
-  hazard_dash_switch:
-    <<: *dt_connector
-    pinlabels: [IND-RELAY-IN,HAZARD-LAMP-12v,RIGHT-SIG, HAZ-RELAY-IN, LEFT-SIG, IND-RELAY-OUT]
+
 
 
   relay_ignition_1:
@@ -121,6 +136,11 @@ connectors:
     <<: *relay
   relay_horn:
     <<: *relay
+
+  blinker_hazard:
+    <<: *blinker
+  blinker_indicators:
+    <<: *blinker
 
 
 
@@ -149,13 +169,23 @@ cables:
   fusebox-to-ind-hl-horn_cable:
     <<: *lucas_wire_bundle
     category: bundle
-    wirelabels: [HORN-SW, TURN-SIG, HL-12v]
+    wirelabels: [HORN-SW, HL-12v, TURN-SIG]
     colors: [GN,RD,RD]
   fusebox-to-switches:
     <<: *lucas_wire_bundle
     category: bundle
-    wirelabels: [HORN-SW, HEADLIGHTS]
-    colors: [GN,RD]
+    wirelabels: [HEADLIGHT-PWR, AC-HEAT-PWR]
+    colors: [RD,BK]
+  fusebox-to-blinkers:
+    <<: *lucas_wire_bundle
+    category: bundle
+    wirelabels: [TURN-SIG,HAZARD]
+    colors: [RD,RD]  
+  blinkers-to-switches:
+    <<: *lucas_wire_bundle
+    category: bundle
+    wirelabels: [HEADTURN-SIG,HAZARD]
+    colors: [RD,RD]
   front_end_cable:
     <<: *lucas_wire_bundle
     category: bundle
@@ -167,8 +197,12 @@ cables:
     wirelabels: [LOW_BEAM,HIGH_BEAM,HORN]   
   v-fusebox-cable:
     gauge: 0.5 mm2
-    colors: [GN, RD, RD] 
-    wirelabels: [HORN-SW, HEADLIGHTS,TURN-SIG]       
+    colors: [GN, RD, RD,BK] 
+    wirelabels: [HORN-SW, HEADLIGHT-PWR,TURN-SIG,AC-HEAT-PWR]       
+  virtual-switch-to-x:
+    gauge: 0.5 mm2
+    colors: [BK] 
+    wirelabels: [AC]   
   wire:
     gauge: 0.5 mm2
     colors: [RD]
@@ -244,16 +278,24 @@ connections:
     - signal: [3]
     - relay_horn: [COIL+]
   -  
-    - fusebox: [HORN, HEADLIGHTS,TURN-SIG]
-    - v-fusebox-cable: [1-3]  
-    - upstream_virtual_fusebox: [1-3]  
+    - fusebox: [HORN, HEADLIGHTS,TURN-SIG,AC-HEAT]
+    - v-fusebox-cable: [1-4]  
+    - upstream_virtual_fusebox: [1-4] 
   - 
-    - upstream_virtual_fusebox.upstream_virtual_fusebox-pair: [TURN-SIG, HEADLIGHTS]
-    - fusebox-to-switches: [HORN-SW, HEADLIGHTS]
+    - upstream_virtual_fusebox.upstream_virtual_fusebox-pair: [HEADLIGHTS, AC-HEAT-PWR]
+    - fusebox-to-switches: [HEADLIGHT-PWR,AC-HEAT-PWR]
   -
-    - fusebox-to-switches: [HEADLIGHTS]
-    - headlight_dash_switch: [IN]
-  
+    - fusebox-to-switches: [AC-HEAT-PWR]
+    - rear_demist_dash_switch: [IN]
+  -
+    - rear_demist_dash_switch: [OUT]
+    - virtual-switch-to-x: [AC]
+
+
+    
+  -
+    - fusebox-to-switches: [HEADLIGHT-PWR]
+    - headlight_dash_switch: [IN]  
   - 
     - upstream_virtual.upstream_virtual-pair
   - 
@@ -261,9 +303,31 @@ connections:
     - col_ind_hilo_horn_stalk_cable: [1-8]
   - 
     - headlight_dash_switch: [MAIN-OUT]
-    - fusebox-to-ind-hl-horn_cable: [3]
+    - fusebox-to-ind-hl-horn_cable: [HL-12v]
     - column_lights_indicators_f: [HL-12v]
   - 
-    - upstream_virtual_fusebox-pair: [HORN,TURN-SIG]
-    - fusebox-to-ind-hl-horn_cable: [1,2]
-    - column_lights_indicators_f: [HORN-12v, IND-12v]
+    - upstream_virtual_fusebox-pair: [HORN]
+    - fusebox-to-ind-hl-horn_cable: [HORN-SW]
+    - column_lights_indicators_f: [HORN-12v]
+  - 
+    - upstream_virtual_fusebox-pair: [TURN-SIG, HAZARD]
+    - fusebox-to-blinkers: [TURN-SIG, HAZARD]
+  - 
+    - fusebox-to-blinkers: [HAZARD]
+    - blinker_hazard: [12v-IN]
+  - 
+    - fusebox-to-blinkers: [TURN-SIG]
+    - blinker_indicators: [12v-IN]
+  -
+    - blinker_indicators: [BLINK-OUT]
+    - blinkers-to-switches: 1
+    - hazard_dash_switch: [IND-RELAY-IN]
+  -
+    - blinker_hazard: [BLINK-OUT]
+    - blinkers-to-switches: 2
+    - hazard_dash_switch: [HAZ-RELAY-IN]
+  - 
+    - hazard_dash_switch: [IND-RELAY-OUT]
+    - fusebox-to-ind-hl-horn_cable: [TURN-SIG]
+    - column_lights_indicators_f: [IND-12v]
+  
