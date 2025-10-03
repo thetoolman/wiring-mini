@@ -45,6 +45,9 @@ connectors:
   ferrule:
     style: simple
     type: ferrule
+  indicator-ferrules:
+    type: ferrule
+    pinlabels: [LEFT,RIGHT]
 
   # RELAYS
   relay_ignition_1:
@@ -228,26 +231,39 @@ cables:
     wirelabels: [HEADTURN-SIG,HAZARD]
     colors: [RD,RD]
     
-  from-column-indicators:
+  indicator-signal-wire:
     <<: *indicators
     category: bundle
-    colors: [LB, BU]
-    wirelabels: [LEFT-SIG-IND,RIGHT-SIG-IND] 
+    colors: [BU, "#000070"]
+    wirelabels: [LEFT-SIG-IND,RIGHT-SIG-IND]
 
+  indicator-front-wire:
+    <<: *indicators
+    category: bundle
+    colors: [LB, "#000070"]
+    wirelabels: [LEFT-FRONT-SIG,RIGHT-FRONT-SIG]
+
+  indicator-rear-wire:
+    <<: *indicators
+    category: bundle
+    colors: [YE, OL]
+    wirelabels: [LEFT-REAR-TURN,RIGHT-REAR-TURN]
+
+  # note (left)-... wire feeds both sides: left- on wire, junction downstream
   front_end_cable:
     <<: *lucas_wire_bundle
     category: bundle
-    colors: [LB, BU, BN, BG, GN, OL]
-    wirelabels: [LEFT,RIGHT,SIDELIGHTS,LOW_BEAM,HIGH_BEAM,HORN]    
+    colors: [LB, "#000070", BN, BG, GN, OL]
+    wirelabels: [LEFT-FRONT-SIG,RIGHT-FRONT-SIG,FRONT-PARK,(LEFT)-LOW-BEAM,(LEFT)-HIGH-BEAM,HORN]
   rear_end_cable:
     <<: *lucas_wire_bundle
     category: bundle
-    colors: [LB, BU, BN, BG, GN, OL,BK,BK,BK]
-    wirelabels: [LEFT,RIGHT,SIDELIGHTS,BRAKE,REVERSE,BOOT-SENSE,LED-5v,LED-DATA]   
+    colors: [YE, OL, BN, OG, GN, OL,BK,BK,BK]
+    wirelabels: [LEFT-REAR-TURN,RIGHT-REAR-TURN,(LEFT)-TAIL-PARK,THIRD-BRAKE,(LEFT)-BACKUP,BOOT-SENSE,LED-5v,LED-DATA]
   relay_to_column:
     gauge: 0.5 mm2
     colors: [BG, GN, OL]
-    wirelabels: [LOW_BEAM,HIGH_BEAM,HORN] 
+    wirelabels: [(LEFT)-LOW-BEAM,(LEFT)-HIGH-BEAM,HORN]
   virtual-switch-to-x:
     gauge: 0.5 mm2
     colors: [BK] 
@@ -340,7 +356,7 @@ connections:
     - fusebox-to-column.fusebox-to-column-clone: [HORN-SW]
     - column_lights_indicators_f: [HORN-12v]
   - 
-    - from-column-indicators.indicators_from_column: [LEFT-SIG-IND,RIGHT-SIG-IND]
+    - indicator-signal-wire.indicators_from_column: [LEFT-SIG-IND,RIGHT-SIG-IND]
     - column_lights_indicators_f: [LEFT-SIG,RIGHT-SIG]
 
   #  RELAYS: signals
@@ -368,10 +384,10 @@ connections:
   # RELAYS: output
   -
     - relay_headlights_low: [VOUT]
-    - front_end_cable: [LOW_BEAM]
+    - front_end_cable: [(LEFT)-LOW-BEAM]
   -
     - relay_headlights_high: [VOUT]
-    - front_end_cable: [HIGH_BEAM]
+    - front_end_cable: [(LEFT)-HIGH-BEAM]
   -
     - relay_horn: [VOUT]
     - front_end_cable: [HORN]
@@ -392,22 +408,48 @@ connections:
     - blinkers-to-switches: 2
     - hazard_dash_switch: [HAZ-RELAY-IN]
 
-# LIGHTING JUNCTIONS
 
   # LOOM CONNECTORS
   - 
     - front_end_cable: [1-6]
     - front_end_connector: [1-6]
   - 
-    - from-column-indicators.indicators_to_front: [LEFT-SIG-IND,RIGHT-SIG-IND]
+    - indicator-front-wire: [1-2]
     - ferrule.
-    - front_end_cable: [LEFT,RIGHT]
-  - 
+    - front_end_cable: [1-2]
+  -
+    - indicator-signal-wire.from_hazard: [1,2]
+    - hazard_dash_switch: [ LEFT-SIG,RIGHT-SIG ]
+  -
+    - indicator-signal-wire.indicators_to_fellten: [1,2]
+    - fellten_connector: [ LEFT-SIG,RIGHT-SIG ]
+  -
+    - indicator-rear-wire: [1-2]
+    - ferrule.
+    - rear_end_cable: [1-2]
+  -
     - rear_end_cable: [1-8]
     - rear_end_connector: [1-8]
 
 
+  # LIGHTING JUNCTIONS
 
+  # indicator junction near switches
+  -
+    - indicator-signal-wire.indicators_to_fellten-clone: [1-2]
+    - indicator-ferrules: [1-2]
+  -
+    - indicator-signal-wire.indicators_from_column-clone: [1-2]
+    - indicator-ferrules: [1-2]
+  -
+    - indicator-rear-wire.indicator-rear-wire-clone: [1-2]
+    - indicator-ferrules: [1-2]
+  -
+    - indicator-front-wire.indicator-front-wire-clone: [1-2]
+    - indicator-ferrules: [1-2]
+  -
+    - indicator-ferrules: [1-2]
+    - from_hazard: [1-2]
 
 
 
