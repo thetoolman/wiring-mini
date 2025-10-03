@@ -210,11 +210,11 @@ cables:
     category: bundle
     colors: [RD, RD, RD, GN, BN, OG]
     wirelabels: [IGN-SW,ALT-PWR,ALT-PWR-2,HORN-SW,IGN-SW-IGN,IGN-SW-ACC]
-  relay-to-column:
+  switch-to-column:
     <<: *lucas_wire_bundle
     category: bundle
-    wirelabels: [HL-12v, TURN-SIG]
-    colors: [RD,RD]
+    wirelabels: [ALT-PWR, SAFETY-SW]
+    colors: [RD,VT]
   fusebox-to-switches:
     <<: *lucas_wire_bundle
     category: bundle
@@ -312,16 +312,16 @@ connections:
     - fusebox-to-blinkers.fusebox-to-blinkers-clone: [TURN-SIG,HAZARD]  
 # SWITCHES
 
-  - 
-    - hazard_dash_switch: [IND-RELAY-OUT]
-    - relay-to-column: [TURN-SIG]
+  -
+    - hazard_dash_switch.hazard_dash_switch-clone: [IND-RELAY-OUT]
+    - switch-to-column: [SAFETY-SW]
     - column_lights_indicators_f: [IND-12v]
   - 
     - column_lights_indicators_m: [1-7,9]
     - col_ind_hilo_horn_stalk_cable: [1-8]
   - 
     - headlight_dash_switch: [MAIN-OUT]
-    - relay-to-column: [HL-12v]
+    - switch-to-column: [ALT-PWR]
     - column_lights_indicators_f: [HL-12v]
   -
     - fusebox-to-switches: [AC-HEAT-PWR]
