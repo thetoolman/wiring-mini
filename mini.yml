@@ -33,12 +33,18 @@ templates:
     type: blinker
     subtype: male
     pinlabels: [12v-IN,BLINK-OUT]
-  - &junction:
-    style: simple
-    type: ferrule
+  - &indicators
+    <<: *lucas_wire_bundle
+    category: bundle
+    colors: [LB, BU]
+    wirelabels: [LEFT,RIGHT] 
+
 
 
 connectors:
+  ferrule:
+    style: simple
+    type: ferrule
 
   # RELAYS
   relay_ignition_1:
@@ -58,6 +64,7 @@ connectors:
     <<: *blinker
   blinker_indicators:
     <<: *blinker
+
 
 
   fusebox:
@@ -138,7 +145,7 @@ connectors:
     <<: *dt_connector
     subtype: female
     pinlabels: [LEFT,RIGHT,SIDELIGHTS,LOW_BEAM,HIGH_BEAM,HORN,BONNET-SENSE,LED-5v,LED-DATA]
-  read_end_connector:
+  rear_end_connector:
     <<: *dt_connector
     subtype: female
     pinlabels: [LEFT,RIGHT,SIDELIGHTS,BRAKE,REVERSE,BOOT-SENSE,LED-5v,LED-DATA]
@@ -170,17 +177,6 @@ connectors:
     pinlabels: [12v, GROUND]
 
 
-# VIRTUAL CONNECTORS
-  virtual_stalk:
-    <<: *dt_connector
-    subtype: female
-    pinlabels: [LEFT,RIGHT,SIDELIGHT-PWR,LOW_BEAM-SIG,HIGH_BEAM-SIG,HORN-SIG, START-SIG]
-
-  virtual_fusebox_A:
-    <<: *dt_connector
-    subtype: female
-    pinlabels: [HORN, HEADLIGHTS,TURN-SIG,HAZARD,AC-HEAT-PWR]
-
 
 #
 ### CABLES
@@ -211,11 +207,11 @@ cables:
     category: bundle
     colors: [RD, RD, RD, GN, BN, OG]
     wirelabels: [IGN-SW,ALT-PWR,ALT-PWR-2,HORN-SW,IGN-SW-IGN,IGN-SW-ACC]
-  fusebox-to-ind-hl-horn_cable:
+  relay-to-column:
     <<: *lucas_wire_bundle
     category: bundle
-    wirelabels: [HORN-SW, HL-12v, TURN-SIG]
-    colors: [GN,RD,RD]
+    wirelabels: [HL-12v, TURN-SIG]
+    colors: [RD,RD]
   fusebox-to-switches:
     <<: *lucas_wire_bundle
     category: bundle
@@ -231,14 +227,24 @@ cables:
     category: bundle
     wirelabels: [HEADTURN-SIG,HAZARD]
     colors: [RD,RD]
-
+    
+  from-column-indicators:
+    <<: *indicators
+    category: bundle
+    colors: [LB, BU]
+    wirelabels: [LEFT-SIG-IND,RIGHT-SIG-IND] 
 
   front_end_cable:
     <<: *lucas_wire_bundle
     category: bundle
     colors: [LB, BU, BN, BG, GN, OL]
     wirelabels: [LEFT,RIGHT,SIDELIGHTS,LOW_BEAM,HIGH_BEAM,HORN]    
-  signal:
+  rear_end_cable:
+    <<: *lucas_wire_bundle
+    category: bundle
+    colors: [LB, BU, BN, BG, GN, OL,BK,BK,BK]
+    wirelabels: [LEFT,RIGHT,SIDELIGHTS,BRAKE,REVERSE,BOOT-SENSE,LED-5v,LED-DATA]   
+  relay_to_column:
     gauge: 0.5 mm2
     colors: [BG, GN, OL]
     wirelabels: [LOW_BEAM,HIGH_BEAM,HORN] 
@@ -247,7 +253,7 @@ cables:
     colors: [BK] 
     wirelabels: [AC] 
 
-  virtual_fusebox_cable_A:
+  fusebox-to-column:
     gauge: 0.5 mm2
     colors: [GN] 
     wirelabels: [HORN-SW]       
@@ -281,28 +287,25 @@ connections:
     - relay_horn: [VIN]
   -  
     - fusebox: [HORN]
-    - virtual_fusebox_cable_A: [1]  
-    - virtual_fusebox_A: [HORN] 
+    - fusebox-to-column: [1]  
   -  
     - fusebox: [HEADLIGHTS,AC-HEAT]
     - fusebox-to-switches.fusebox-to-switches-clone: [1-2]  
-    - virtual_fusebox_A: [HEADLIGHTS,AC-HEAT-PWR] 
   -  
     - fusebox: [TURN-SIG,HAZARD]
     - fusebox-to-blinkers.fusebox-to-blinkers-clone: [TURN-SIG,HAZARD]  
-    - virtual_fusebox_A: [TURN-SIG,HAZARD] 
 # SWITCHES
 
   - 
     - hazard_dash_switch: [IND-RELAY-OUT]
-    - fusebox-to-ind-hl-horn_cable: [TURN-SIG]
+    - relay-to-column: [TURN-SIG]
     - column_lights_indicators_f: [IND-12v]
   - 
     - column_lights_indicators_m: [1-7,9]
     - col_ind_hilo_horn_stalk_cable: [1-8]
   - 
     - headlight_dash_switch: [MAIN-OUT]
-    - fusebox-to-ind-hl-horn_cable: [HL-12v]
+    - relay-to-column: [HL-12v]
     - column_lights_indicators_f: [HL-12v]
   -
     - fusebox-to-switches: [AC-HEAT-PWR]
@@ -330,7 +333,15 @@ connections:
   #   - column_lights_indicators_f
   #   - <==>
   #   - column_lights_indicators_m
-
+  - 
+    - relay_to_column.relay_to_column-clone: [1-3]
+    - column_lights_indicators_f: [LO-SIG,HI-SIG,HORN-SIG]
+  - 
+    - fusebox-to-column.fusebox-to-column-clone: [HORN-SW]
+    - column_lights_indicators_f: [HORN-12v]
+  - 
+    - from-column-indicators.indicators_from_column: [LEFT-SIG-IND,RIGHT-SIG-IND]
+    - column_lights_indicators_f: [LEFT-SIG,RIGHT-SIG]
 
   #  RELAYS: signals
   -
@@ -340,17 +351,14 @@ connections:
     - relay_ignition_2: [COIL+]  
     - col_ign_cable: [(BRAKE-SW)-R2]    
   -  
-    - virtual_stalk: [HORN-SIG]
-    - signal: [3]
     - relay_horn: [COIL+]
+    - relay_to_column: [3]
   -  
-    - virtual_stalk: [LOW_BEAM-SIG]
-    - signal: [1]
     - relay_headlights_low: [COIL+]
+    - relay_to_column: [1]
   -  
-    - virtual_stalk: [HIGH_BEAM-SIG]
-    - signal: [2]
     - relay_headlights_high: [COIL+]
+    - relay_to_column: [2]
 
   # RELAYS: input
   -
@@ -384,45 +392,21 @@ connections:
     - blinkers-to-switches: 2
     - hazard_dash_switch: [HAZ-RELAY-IN]
 
+# LIGHTING JUNCTIONS
+
   # LOOM CONNECTORS
   - 
     - front_end_cable: [1-6]
     - front_end_connector: [1-6]
+  - 
+    - from-column-indicators.indicators_to_front: [LEFT-SIG-IND,RIGHT-SIG-IND]
+    - ferrule.
+    - front_end_cable: [LEFT,RIGHT]
+  - 
+    - rear_end_cable: [1-8]
+    - rear_end_connector: [1-8]
 
 
-  # VIRTUAL
-  - 
-    - virtual_stalk.virtual_stalk-clone
-  # -
-  #   - virtual_stalk-clone
-  #   - <==>
-  #   - virtual_stalk
-  -  
-    - virtual_stalk: [LEFT, RIGHT, SIDELIGHT-PWR]
-    - front_end_cable: [LEFT, RIGHT, SIDELIGHTS]
-  -  
-    - virtual_stalk: [START-SIG]
-    - col_ign_cable: [START]
-  -  
-    - virtual_stalk-clone: [LOW_BEAM-SIG,HIGH_BEAM-SIG,HORN-SIG]
-    - signal.signal-clone-from-column: [1-3]
-    - column_lights_indicators_f: [LO-SIG,HI-SIG,HORN-SIG]
-  - 
-    - virtual_fusebox_A.virtual_fusebox_A-clone
-  # -
-  #   - virtual_fusebox_A
-  #   - <==>
-  #   - virtual_fusebox_A-clone
-  - 
-    - virtual_fusebox_A-clone: [HEADLIGHTS, AC-HEAT-PWR]
-    - fusebox-to-switches: [HEADLIGHT-PWR,AC-HEAT-PWR]
-  - 
-    - virtual_fusebox_A-clone: [HORN]
-    - fusebox-to-ind-hl-horn_cable: [HORN-SW]
-    - column_lights_indicators_f: [HORN-12v]
-  - 
-    - virtual_fusebox_A-clone: [TURN-SIG, HAZARD]
-    - fusebox-to-blinkers: [TURN-SIG, HAZARD]
 
 
 
