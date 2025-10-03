@@ -1,37 +1,37 @@
 Id	Description	Qty	Unit	Designators
 1	Cable, 1 x 0.5 mm²	0	m	fusebox-to-column, fusebox-to-column-clone, virtual-switch-to-x
-2	Cable, 3 x 0.5 mm²	0	m	relay_to_column, relay_to_column-clone
-3	Connector, DT-style connector, female, 8 pins	2		fellten_connector, rear_end_connector
-4	Connector, DT-style connector, female, 9 pins	1		front_end_connector
-5	Connector, DT-style connector, male, 3 pins	1		headlight_dash_switch
-6	Connector, DT-style connector, male, 4 pins	1		rear_demist_dash_switch
-7	Connector, DT-style connector, male, 6 pins	2		hazard_dash_switch, hazard_dash_switch-clone
-8	Connector, Lucas, female, 4 pins	1		column_ignition_f
-9	Connector, Lucas, female, 9 pins	1		column_lights_indicators_f
+2	Cable, 3 x 0.5 mm²	0	m	relay-to-column, relay-to-column-clone
+3	Connector, DT-style connector, female, 8 pins	2		fellten-connector, rear-end-connector
+4	Connector, DT-style connector, female, 9 pins	1		front-end-connector
+5	Connector, DT-style connector, male, 3 pins	1		headlight-dash-switch
+6	Connector, DT-style connector, male, 4 pins	1		rear-demist-dash-switch
+7	Connector, DT-style connector, male, 6 pins	2		hazard-dash-switch, hazard-dash-switch-clone
+8	Connector, Lucas, female, 4 pins	1		column-ignition-f
+9	Connector, Lucas, female, 9 pins	1		column-lights-indicators-f
 10	Connector, Lucas, male, 25 pins	1		fusebox
-11	Connector, Lucas, male, 4 pins	1		column_ignition_m
-12	Connector, Lucas, male, 9 pins	1		column_lights_indicators_m
-13	Connector, blinker, male, 2 pins	2		blinker_hazard, blinker_indicators
+11	Connector, Lucas, male, 4 pins	1		column-ignition-m
+12	Connector, Lucas, male, 9 pins	1		column-lights-indicators-m
+13	Connector, blinker, male, 2 pins	2		blinker-hazard, blinker-indicators
 14	Connector, ferrule	4		
 15	Connector, ferrule, 2 pins	1		indicator-ferrules
-16	Connector, relay, male, 4 pins	5		relay_headlights_high, relay_headlights_low, relay_horn, relay_ignition_1, relay_ignition_2
-17	Wire, 0.5 mm², #000070	0	m	from_hazard, front_end_cable, indicator-front-wire, indicator-front-wire-clone, indicators_from_column, indicators_from_column-clone, indicators_to_fellten, indicators_to_fellten-clone
-18	Wire, 0.5 mm², BG	0	m	front_end_cable
-19	Wire, 0.5 mm², BK	0	m	fusebox-to-switches, fusebox-to-switches-clone, rear_end_cable
-20	Wire, 0.5 mm², BN	0	m	front_end_cable, fusebox_relay_cable, ignition, rear_end_cable
-21	Wire, 0.5 mm², BU	0	m	col_ind_hilo_horn_stalk_cable, from_hazard, indicators_from_column, indicators_from_column-clone, indicators_to_fellten, indicators_to_fellten-clone
-22	Wire, 0.5 mm², BURD	0	m	col_ind_hilo_horn_stalk_cable
-23	Wire, 0.5 mm², BUWH	0	m	col_ind_hilo_horn_stalk_cable
-24	Wire, 0.5 mm², GN	0	m	front_end_cable, fusebox_relay_cable, rear_end_cable
-25	Wire, 0.5 mm², GNBN	0	m	col_ind_hilo_horn_stalk_cable
-26	Wire, 0.5 mm², GNRD	0	m	col_ind_hilo_horn_stalk_cable
-27	Wire, 0.5 mm², GNWH	0	m	col_ind_hilo_horn_stalk_cable, ignition
-28	Wire, 0.5 mm², LB	0	m	front_end_cable, indicator-front-wire, indicator-front-wire-clone
-29	Wire, 0.5 mm², OG	0	m	fusebox_relay_cable, rear_end_cable
-30	Wire, 0.5 mm², OL	0	m	col_ign_cable, front_end_cable, indicator-rear-wire, indicator-rear-wire-clone, rear_end_cable
-31	Wire, 0.5 mm², RD	0	m	blinkers-to-switches, col_ign_cable, fusebox-to-blinkers, fusebox-to-blinkers-clone, fusebox-to-switches, fusebox-to-switches-clone, fusebox_relay_cable, switch-to-column
-32	Wire, 0.5 mm², VT	0	m	col_ind_hilo_horn_stalk_cable, switch-to-column
-33	Wire, 0.5 mm², VTBK	0	m	col_ind_hilo_horn_stalk_cable
-34	Wire, 0.5 mm², WH	0	m	col_ign_cable, ignition
-35	Wire, 0.5 mm², WHRD	0	m	col_ign_cable, ignition
-36	Wire, 0.5 mm², YE	0	m	indicator-rear-wire, indicator-rear-wire-clone, rear_end_cable
+16	Connector, relay, male, 4 pins	5		relay-headlights-high, relay-headlights-low, relay-horn, relay-ignition-1, relay-ignition-2
+17	Wire, 0.5 mm², #000070	0	m	from-hazard, front-end-cable, indicator-front-wire, indicator-front-wire-clone, indicators-from-column, indicators-from-column-clone, indicators-to-fellten, indicators-to-fellten-clone
+18	Wire, 0.5 mm², BG	0	m	front-end-cable
+19	Wire, 0.5 mm², BK	0	m	fusebox-to-switches, fusebox-to-switches-clone, rear-end-cable
+20	Wire, 0.5 mm², BN	0	m	front-end-cable, fusebox-relay-cable, ignition, rear-end-cable
+21	Wire, 0.5 mm², BU	0	m	col-ind-hilo-horn-stalk-cable, from-hazard, indicators-from-column, indicators-from-column-clone, indicators-to-fellten, indicators-to-fellten-clone
+22	Wire, 0.5 mm², BURD	0	m	col-ind-hilo-horn-stalk-cable
+23	Wire, 0.5 mm², BUWH	0	m	col-ind-hilo-horn-stalk-cable
+24	Wire, 0.5 mm², GN	0	m	front-end-cable, fusebox-relay-cable, rear-end-cable
+25	Wire, 0.5 mm², GNBN	0	m	col-ind-hilo-horn-stalk-cable
+26	Wire, 0.5 mm², GNRD	0	m	col-ind-hilo-horn-stalk-cable
+27	Wire, 0.5 mm², GNWH	0	m	col-ind-hilo-horn-stalk-cable, ignition
+28	Wire, 0.5 mm², LB	0	m	front-end-cable, indicator-front-wire, indicator-front-wire-clone
+29	Wire, 0.5 mm², OG	0	m	fusebox-relay-cable, rear-end-cable
+30	Wire, 0.5 mm², OL	0	m	col-ign-cable, front-end-cable, indicator-rear-wire, indicator-rear-wire-clone, rear-end-cable
+31	Wire, 0.5 mm², RD	0	m	blinkers-to-switches, col-ign-cable, fusebox-relay-cable, fusebox-to-blinkers, fusebox-to-blinkers-clone, fusebox-to-switches, fusebox-to-switches-clone, switch-to-column
+32	Wire, 0.5 mm², VT	0	m	col-ind-hilo-horn-stalk-cable, switch-to-column
+33	Wire, 0.5 mm², VTBK	0	m	col-ind-hilo-horn-stalk-cable
+34	Wire, 0.5 mm², WH	0	m	col-ign-cable, ignition
+35	Wire, 0.5 mm², WHRD	0	m	col-ign-cable, ignition
+36	Wire, 0.5 mm², YE	0	m	indicator-rear-wire, indicator-rear-wire-clone, rear-end-cable

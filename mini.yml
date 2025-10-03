@@ -15,10 +15,10 @@ templates:
   - &lucas
     type: Lucas
     subtype: male
-  - &lucas_wire_bundle
+  - &lucas-wire-bundle
     category: bundle
     gauge: 0.5 mm2
-  - &dt_connector
+  - &dt-connector
     type: DT-style connector
     subtype: male
   - &ez-wire
@@ -34,7 +34,7 @@ templates:
     subtype: male
     pinlabels: [12v-IN,BLINK-OUT]
   - &indicators
-    <<: *lucas_wire_bundle
+    <<: *lucas-wire-bundle
     category: bundle
     colors: [LB, BU]
     wirelabels: [LEFT,RIGHT] 
@@ -50,22 +50,22 @@ connectors:
     pinlabels: [LEFT,RIGHT]
 
   # RELAYS
-  relay_ignition_1:
+  relay-ignition-1:
     <<: *relay
-  relay_ignition_2:
+  relay-ignition-2:
     <<: *relay
-  relay_headlights_low:
+  relay-headlights-low:
     <<: *relay
-  relay_headlights_high:
+  relay-headlights-high:
     <<: *relay
-  relay_horn:
+  relay-horn:
     <<: *relay
 
 
   # BLINKERS
-  blinker_hazard:
+  blinker-hazard:
     <<: *blinker
-  blinker_indicators:
+  blinker-indicators:
     <<: *blinker
 
 
@@ -106,37 +106,37 @@ connectors:
 
 
   # SWITCHES
-  brake_test_dash_switch:
-    <<: *dt_connector
+  brake-test-dash-switch:
+    <<: *dt-connector
     pinlabels: [IN, OUT, ILLUM-IN, ILLUM-GND]
 
-  rear_demist_dash_switch:
-    <<: *dt_connector
+  rear-demist-dash-switch:
+    <<: *dt-connector
     pinlabels: [IN, OUT, ILLUM-IN, ILLUM-GND]
 
-  hazard_dash_switch:
-    <<: *dt_connector
+  hazard-dash-switch:
+    <<: *dt-connector
     pinlabels: [IND-RELAY-IN,HAZARD-LAMP-12v,RIGHT-SIG, HAZ-RELAY-IN, LEFT-SIG, IND-RELAY-OUT]
 
-  headlight_dash_switch:
-    <<: *dt_connector
+  headlight-dash-switch:
+    <<: *dt-connector
     pinlabels: [IN, ILLUM-OUT, MAIN-OUT]
 
 
   # COLUMN CONNECTORS
-  column_ignition_m:
+  column-ignition-m:
     <<: *lucas
     notes: BMC column igntion
     pinlabels: [+12V, R1, R2, START]
-  column_ignition_f:
+  column-ignition-f:
     <<: *lucas
     subtype: female
     pinlabels: [+12V, R1, R2, START]
-  column_lights_indicators_m:
+  column-lights-indicators-m:
     <<: *lucas
     notes: 'BMC column indicator/hi-lo/horn stalk'
     pinlabels: [RIGHT-SIG,HORN-12v,HL-12v,LO-SIG,LEFT-SIG,HORN-SIG,IND-12v,NC,HI-SIG]
-  column_lights_indicators_f:
+  column-lights-indicators-f:
     <<: *lucas
     subtype: female
     notes: 'loom indicator/hi-lo/horn stalk'
@@ -144,38 +144,38 @@ connectors:
 
 
   # LOOM SECTION JOINS
-  front_end_connector:
-    <<: *dt_connector
+  front-end-connector:
+    <<: *dt-connector
     subtype: female
-    pinlabels: [LEFT,RIGHT,SIDELIGHTS,LOW_BEAM,HIGH_BEAM,HORN,BONNET-SENSE,LED-5v,LED-DATA]
-  rear_end_connector:
-    <<: *dt_connector
+    pinlabels: [LEFT,RIGHT,SIDELIGHTS,LOW-BEAM,HIGH-BEAM,HORN,BONNET-SENSE,LED-5v,LED-DATA]
+  rear-end-connector:
+    <<: *dt-connector
     subtype: female
     pinlabels: [LEFT,RIGHT,SIDELIGHTS,BRAKE,REVERSE,BOOT-SENSE,LED-5v,LED-DATA]
-  fellten_connector:
-    <<: *dt_connector
+  fellten-connector:
+    <<: *dt-connector
     subtype: female
     pinlabels: [IGN,START,SIDELIGHTS,HI-SIG,LEFT-SIG,RIGHT-SIG,REVERSE,BRAKE]    
 
   # ANCILLERIES
-  radio_connector:
-    <<: *dt_connector
+  radio-connector:
+    <<: *dt-connector
     subtype: female
     pinlabels: [12v, 1-12v, GROUND, ILLUM,AMP-SIG]
-  dome_dashcam_connector:
-    <<: *dt_connector
+  dome-dashcam-connector:
+    <<: *dt-connector
     subtype: female
     pinlabels: [12v, GROUND]
-  usb_connector:
-    <<: *dt_connector
+  usb-connector:
+    <<: *dt-connector
     subtype: female
     pinlabels: [12v, GROUND]
-  esp32_connector:
-    <<: *dt_connector
+  esp32-connector:
+    <<: *dt-connector
     subtype: female
     pinlabels: [12v, GROUND]    
-  alarm_locks_connector:
-    <<: *dt_connector
+  alarm-locks-connector:
+    <<: *dt-connector
     subtype: female
     pinlabels: [12v, GROUND]
 
@@ -187,46 +187,46 @@ connectors:
 cables:
 
   ignition:
-    <<: *lucas_wire_bundle
+    <<: *lucas-wire-bundle
     category: bundle
     colors: [BN, GNWH, WH, WHRD]
 
-  col_ind_hilo_horn_stalk_cable:
-    <<: *lucas_wire_bundle
+  col-ind-hilo-horn-stalk-cable:
+    <<: *lucas-wire-bundle
     category: bundle
     wirelabels: [RIGHT-SIG,HORN-12v,HL-12v,LO-SIG,LEFT-SIG,HORN-SIG,IND-12v,HI-SIG]
     colors:     [GNWH     ,      VT,    BU,BUWH ,GNRD    ,VTBK    ,GNBN   ,BURD   ]
 
-  col_ign_cable:
-    <<: *lucas_wire_bundle
+  col-ign-cable:
+    <<: *lucas-wire-bundle
     category: bundle
     colors: [RD, OL, WH, WHRD]
     wirelabels: [CHOKE-PWR,(TEMP-SND)-R1,(BRAKE-SW)-R2,START]
 
 
 
-  fusebox_relay_cable:
-    <<: *lucas_wire_bundle
+  fusebox-relay-cable:
+    <<: *lucas-wire-bundle
     category: bundle
     colors: [RD, RD, RD, GN, BN, OG]
     wirelabels: [IGN-SW,ALT-PWR,ALT-PWR-2,HORN-SW,IGN-SW-IGN,IGN-SW-ACC]
   switch-to-column:
-    <<: *lucas_wire_bundle
+    <<: *lucas-wire-bundle
     category: bundle
     wirelabels: [ALT-PWR, SAFETY-SW]
     colors: [RD,VT]
   fusebox-to-switches:
-    <<: *lucas_wire_bundle
+    <<: *lucas-wire-bundle
     category: bundle
     wirelabels: [HEADLIGHT-PWR, AC-HEAT-PWR]
     colors: [RD,BK]
   fusebox-to-blinkers:
-    <<: *lucas_wire_bundle
+    <<: *lucas-wire-bundle
     category: bundle
     wirelabels: [TURN-SIG,HAZARD]
     colors: [RD,RD]  
   blinkers-to-switches:
-    <<: *lucas_wire_bundle
+    <<: *lucas-wire-bundle
     category: bundle
     wirelabels: [HEADTURN-SIG,HAZARD]
     colors: [RD,RD]
@@ -250,17 +250,17 @@ cables:
     wirelabels: [LEFT-REAR-TURN,RIGHT-REAR-TURN]
 
   # note (left)-... wire feeds both sides: left- on wire, junction downstream
-  front_end_cable:
-    <<: *lucas_wire_bundle
+  front-end-cable:
+    <<: *lucas-wire-bundle
     category: bundle
     colors: [LB, "#000070", BN, BG, GN, OL]
     wirelabels: [LEFT-FRONT-SIG,RIGHT-FRONT-SIG,FRONT-PARK,(LEFT)-LOW-BEAM,(LEFT)-HIGH-BEAM,HORN]
-  rear_end_cable:
-    <<: *lucas_wire_bundle
+  rear-end-cable:
+    <<: *lucas-wire-bundle
     category: bundle
     colors: [YE, OL, BN, OG, GN, OL,BK,BK,BK]
     wirelabels: [LEFT-REAR-TURN,RIGHT-REAR-TURN,(LEFT)-TAIL-PARK,THIRD-BRAKE,(LEFT)-BACKUP,BOOT-SENSE,LED-5v,LED-DATA]
-  relay_to_column:
+  relay-to-column:
     gauge: 0.5 mm2
     colors: [BG, GN, OL]
     wirelabels: [(LEFT)-LOW-BEAM,(LEFT)-HIGH-BEAM,HORN]
@@ -283,24 +283,24 @@ connections:
 # FUSEBOX
   -
     - fusebox: [BRAKE]
-    - col_ign_cable: [CHOKE-PWR]
-    - column_ignition_f: [+12V]
+    - col-ign-cable: [CHOKE-PWR]
+    - column-ignition-f: [+12V]
   -
     - fusebox: [IGN-SW, IGN-SW-IGN]
-    - fusebox_relay_cable: [IGN-SW, IGN-SW-IGN]
-    - relay_ignition_1: [VIN, VOUT]
+    - fusebox-relay-cable: [IGN-SW, IGN-SW-IGN]
+    - relay-ignition-1: [VIN, VOUT]
   -
     - fusebox: [ALT-PWR, IGN-SW-ACC]
-    - fusebox_relay_cable: [ALT-PWR, IGN-SW-ACC]
-    - relay_ignition_2: [VIN, VOUT]
+    - fusebox-relay-cable: [ALT-PWR, IGN-SW-ACC]
+    - relay-ignition-2: [VIN, VOUT]
   -
     - fusebox: [HEADLIGHTS]
-    - fusebox_relay_cable: [ALT-PWR-2]  
-    - relay_headlights_low: [VIN]
+    - fusebox-relay-cable: [ALT-PWR-2]  
+    - relay-headlights-low: [VIN]
   -
     - fusebox: [HORN]
-    - fusebox_relay_cable: [HORN-SW]  
-    - relay_horn: [VIN]
+    - fusebox-relay-cable: [HORN-SW]  
+    - relay-horn: [VIN]
   -  
     - fusebox: [HORN]
     - fusebox-to-column: [1]  
@@ -313,133 +313,133 @@ connections:
 # SWITCHES
 
   -
-    - hazard_dash_switch.hazard_dash_switch-clone: [IND-RELAY-OUT]
+    - hazard-dash-switch.hazard-dash-switch-clone: [IND-RELAY-OUT]
     - switch-to-column: [SAFETY-SW]
-    - column_lights_indicators_f: [IND-12v]
+    - column-lights-indicators-f: [IND-12v]
   - 
-    - column_lights_indicators_m: [1-7,9]
-    - col_ind_hilo_horn_stalk_cable: [1-8]
+    - column-lights-indicators-m: [1-7,9]
+    - col-ind-hilo-horn-stalk-cable: [1-8]
   - 
-    - headlight_dash_switch: [MAIN-OUT]
+    - headlight-dash-switch: [MAIN-OUT]
     - switch-to-column: [ALT-PWR]
-    - column_lights_indicators_f: [HL-12v]
+    - column-lights-indicators-f: [HL-12v]
   -
     - fusebox-to-switches: [AC-HEAT-PWR]
-    - rear_demist_dash_switch: [IN]
+    - rear-demist-dash-switch: [IN]
   -
-    - rear_demist_dash_switch: [OUT]
+    - rear-demist-dash-switch: [OUT]
     - virtual-switch-to-x: [AC]
   -
     - fusebox-to-switches: [HEADLIGHT-PWR]
-    - headlight_dash_switch: [IN]  
+    - headlight-dash-switch: [IN]  
 
-  # COLUMN  
+  # COLUMN
   -
-    - col_ign_cable: [START, (TEMP-SND)-R1,(BRAKE-SW)-R2]
-    - column_ignition_f: [START, R1, R2]
+    - col-ign-cable: [START, (TEMP-SND)-R1,(BRAKE-SW)-R2]
+    - column-ignition-f: [START, R1, R2]
   # -
-  #   - column_ignition_f
+  #   - column-ignition-f
   #   - <==>
-  #   - column_ignition_m
+  #   - column-ignition-m
   -
-    - column_ignition_m: [1-4]
+    - column-ignition-m: [1-4]
     - ignition: [1-4]
 
   # -
-  #   - column_lights_indicators_f
+  #   - column-lights-indicators-f
   #   - <==>
-  #   - column_lights_indicators_m
+  #   - column-lights-indicators-m
   - 
-    - relay_to_column.relay_to_column-clone: [1-3]
-    - column_lights_indicators_f: [LO-SIG,HI-SIG,HORN-SIG]
+    - relay-to-column.relay-to-column-clone: [1-3]
+    - column-lights-indicators-f: [LO-SIG,HI-SIG,HORN-SIG]
   - 
     - fusebox-to-column.fusebox-to-column-clone: [HORN-SW]
-    - column_lights_indicators_f: [HORN-12v]
+    - column-lights-indicators-f: [HORN-12v]
   - 
-    - indicator-signal-wire.indicators_from_column: [LEFT-SIG-IND,RIGHT-SIG-IND]
-    - column_lights_indicators_f: [LEFT-SIG,RIGHT-SIG]
+    - indicator-signal-wire.indicators-from-column: [LEFT-SIG-IND,RIGHT-SIG-IND]
+    - column-lights-indicators-f: [LEFT-SIG,RIGHT-SIG]
 
   #  RELAYS: signals
   -
-    - relay_ignition_1: [COIL+]  
-    - col_ign_cable: [(TEMP-SND)-R1]
+    - relay-ignition-1: [COIL+]  
+    - col-ign-cable: [(TEMP-SND)-R1]
   -
-    - relay_ignition_2: [COIL+]  
-    - col_ign_cable: [(BRAKE-SW)-R2]    
+    - relay-ignition-2: [COIL+]  
+    - col-ign-cable: [(BRAKE-SW)-R2]    
   -  
-    - relay_horn: [COIL+]
-    - relay_to_column: [3]
+    - relay-horn: [COIL+]
+    - relay-to-column: [3]
   -  
-    - relay_headlights_low: [COIL+]
-    - relay_to_column: [1]
+    - relay-headlights-low: [COIL+]
+    - relay-to-column: [1]
   -  
-    - relay_headlights_high: [COIL+]
-    - relay_to_column: [2]
+    - relay-headlights-high: [COIL+]
+    - relay-to-column: [2]
 
   # RELAYS: input
   -
-    - fusebox_relay_cable: [ALT-PWR-2]  
-    - relay_headlights_high: [VIN]
+    - fusebox-relay-cable: [ALT-PWR-2]  
+    - relay-headlights-high: [VIN]
 
   # RELAYS: output
   -
-    - relay_headlights_low: [VOUT]
-    - front_end_cable: [(LEFT)-LOW-BEAM]
+    - relay-headlights-low: [VOUT]
+    - front-end-cable: [(LEFT)-LOW-BEAM]
   -
-    - relay_headlights_high: [VOUT]
-    - front_end_cable: [(LEFT)-HIGH-BEAM]
+    - relay-headlights-high: [VOUT]
+    - front-end-cable: [(LEFT)-HIGH-BEAM]
   -
-    - relay_horn: [VOUT]
-    - front_end_cable: [HORN]
+    - relay-horn: [VOUT]
+    - front-end-cable: [HORN]
 
   # BLINKERS
   - 
     - fusebox-to-blinkers: [HAZARD]
-    - blinker_hazard: [12v-IN]
+    - blinker-hazard: [12v-IN]
   - 
     - fusebox-to-blinkers: [TURN-SIG]
-    - blinker_indicators: [12v-IN]
+    - blinker-indicators: [12v-IN]
   -
-    - blinker_indicators: [BLINK-OUT]
+    - blinker-indicators: [BLINK-OUT]
     - blinkers-to-switches: 1
-    - hazard_dash_switch: [IND-RELAY-IN]
+    - hazard-dash-switch: [IND-RELAY-IN]
   -
-    - blinker_hazard: [BLINK-OUT]
+    - blinker-hazard: [BLINK-OUT]
     - blinkers-to-switches: 2
-    - hazard_dash_switch: [HAZ-RELAY-IN]
+    - hazard-dash-switch: [HAZ-RELAY-IN]
 
 
   # LOOM CONNECTORS
   - 
-    - front_end_cable: [1-6]
-    - front_end_connector: [1-6]
+    - front-end-cable: [1-6]
+    - front-end-connector: [1-6]
   - 
     - indicator-front-wire: [1-2]
     - ferrule.
-    - front_end_cable: [1-2]
+    - front-end-cable: [1-2]
   -
-    - indicator-signal-wire.from_hazard: [1,2]
-    - hazard_dash_switch: [ LEFT-SIG,RIGHT-SIG ]
+    - indicator-signal-wire.from-hazard: [1,2]
+    - hazard-dash-switch: [ LEFT-SIG,RIGHT-SIG ]
   -
-    - indicator-signal-wire.indicators_to_fellten: [1,2]
-    - fellten_connector: [ LEFT-SIG,RIGHT-SIG ]
+    - indicator-signal-wire.indicators-to-fellten: [1,2]
+    - fellten-connector: [ LEFT-SIG,RIGHT-SIG ]
   -
     - indicator-rear-wire: [1-2]
     - ferrule.
-    - rear_end_cable: [1-2]
+    - rear-end-cable: [1-2]
   -
-    - rear_end_cable: [1-8]
-    - rear_end_connector: [1-8]
+    - rear-end-cable: [1-8]
+    - rear-end-connector: [1-8]
 
 
   # LIGHTING JUNCTIONS
 
   # indicator junction near switches
   -
-    - indicator-signal-wire.indicators_to_fellten-clone: [1-2]
+    - indicator-signal-wire.indicators-to-fellten-clone: [1-2]
     - indicator-ferrules: [1-2]
   -
-    - indicator-signal-wire.indicators_from_column-clone: [1-2]
+    - indicator-signal-wire.indicators-from-column-clone: [1-2]
     - indicator-ferrules: [1-2]
   -
     - indicator-rear-wire.indicator-rear-wire-clone: [1-2]
@@ -449,7 +449,7 @@ connections:
     - indicator-ferrules: [1-2]
   -
     - indicator-ferrules: [1-2]
-    - from_hazard: [1-2]
+    - from-hazard: [1-2]
 
 
 
