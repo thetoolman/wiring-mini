@@ -88,6 +88,7 @@ connectors:
       - RADIO
       - CIG-LIGHTER
       - DOOR
+      - # brake + ign
       - BRAKE
       - HEADLIGHTS
       - TRUNK
@@ -246,8 +247,8 @@ cables:
   fusebox-to-switches:
     <<: *lucas-wire-bundle
     category: bundle
-    wirelabels: [HEADLIGHT-PWR, AC-HEAT-PWR]
-    colors: [RD,BK]
+    wirelabels: [HEADLIGHT-PWR, AC-HEAT-PWR, BRAKE-SW-PWR]
+    colors: [RD,BK,OG]
   fusebox-to-blinkers:
     <<: *lucas-wire-bundle
     category: bundle
@@ -320,8 +321,8 @@ cables:
 
   fusebox-to-column:
     gauge: 0.5 mm2
-    colors: [RD, GN, "#000070"]
-    wirelabels: [CHOKE-PWR, HORN-SW, WIPER-PWR]
+    colors: [PK, GN, "#000070"]
+    wirelabels: [IGNITION-SW-COIL, HORN-SW, WIPER-PWR]
 
 #
 ### CONNECTIONS
@@ -332,7 +333,7 @@ connections:
 # FUSEBOX
   -
     - fusebox: [BRAKE]
-    - fusebox-to-column: [CHOKE-PWR]
+    - fusebox-to-column: [IGNITION-SW-COIL]
     - column-ignition-f: [+12V]
   -
     - fusebox: [IGN-SW, IGN-SW-IGN]
@@ -352,10 +353,10 @@ connections:
     - relay-horn: [VIN]
   -  
     - fusebox: [HORN,WIPERS]
-    - fusebox-to-column: [1-2]
+    - fusebox-to-column: [HORN-SW, WIPER-PWR]
   -  
-    - fusebox: [HEADLIGHTS,AC-HEAT]
-    - fusebox-to-switches: [1-2]
+    - fusebox: [HEADLIGHTS,AC-HEAT,BRAKE]
+    - fusebox-to-switches: [1-3]
   -  
     - fusebox: [TURN-SIG,HAZARD]
     - fusebox-to-blinkers: [TURN-SIG,HAZARD]
@@ -521,7 +522,9 @@ connections:
   -
     - column-to-fellten: [ (TEMP-SND)-R1, IGN-SW-START, HIGH-BEAM-IND ]
     - fellten-connector: [ IGN, START, HI-SIG ]
-
+  -
+    - fellten-connector: [ REVERSE, BRAKE]
+    - rear-end-cable: [ (LEFT)-BACKUP, THIRD-BRAKE ]
   -
     - indicator-rear-wire: [1-2]
     - ferrule.

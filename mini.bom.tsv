@@ -8,7 +8,7 @@ Id	Description	Qty	Unit	Designators
 7	Connector, DT-style connector, male, 6 pins	2		hazard-dash-switch, hazard-dash-switch-clone
 8	Connector, Lucas, female, 4 pins	1		column-ignition-f
 9	Connector, Lucas, female, 9 pins	1		column-lights-indicators-f
-10	Connector, Lucas, male, 25 pins	1		fusebox
+10	Connector, Lucas, male, 26 pins	1		fusebox
 11	Connector, Lucas, male, 4 pins	1		column-ignition-m
 12	Connector, Lucas, male, 5 pins	3		column-wipers-f, column-wipers-m, wipers-motor-connector
 13	Connector, Lucas, male, 9 pins	1		column-lights-indicators-m
@@ -32,7 +32,7 @@ Id	Description	Qty	Unit	Designators
 31	Wire, 0.5 mm², GNRD	0	m	col-ind-hilo-horn-stalk-cable
 32	Wire, 0.5 mm², GNWH	0	m	col-ind-hilo-horn-stalk-cable, ignition
 33	Wire, 0.5 mm², LB	0	m	indicator-front-wire, indicator-front-wire-clone, switches-to-front-end
-34	Wire, 0.5 mm², OG	0	m	fusebox-relay-cable, rear-end-cable
+34	Wire, 0.5 mm², OG	0	m	fusebox-relay-cable, fusebox-to-switches, fusebox-to-switches-clone, rear-end-cable
 35	Wire, 0.5 mm², OL	0	m	column-to-fellten, column-to-fellten-clone, column-to-relay, indicator-rear-wire, indicator-rear-wire-clone, rear-end-cable, relay-to-front-end
 36	Wire, 0.5 mm², PK	0	m	switch-to-column
 37	Wire, 0.5 mm², RD	0	m	blinkers-to-switches, fusebox-relay-cable, fusebox-to-blinkers, fusebox-to-blinkers-clone, fusebox-to-switches, fusebox-to-switches-clone, switch-to-column
