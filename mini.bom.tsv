@@ -13,27 +13,27 @@ Id	Description	Qty	Unit	Designators
 12	Connector, Lucas, male, 5 pins	3		column-wipers-f, column-wipers-m, wipers-motor-connector
 13	Connector, Lucas, male, 9 pins	1		column-lights-indicators-m
 14	Connector, blinker, male, 2 pins	2		blinker-hazard, blinker-indicators
-15	Connector, ferrule	4		
+15	Connector, ferrule	6		
 16	Connector, ferrule, 2 pins	1		indicator-ferrules
 17	Connector, relay, male, 4 pins	5		relay-headlights-high, relay-headlights-low, relay-horn, relay-ignition-1, relay-ignition-2
-18	Wire, 0.5 mm², #000070	0	m	from-hazard, front-end-cable, indicator-front-wire, indicator-front-wire-clone, indicators-from-column, indicators-from-column-clone, indicators-to-fellten, indicators-to-fellten-clone
-19	Wire, 0.5 mm², BG	0	m	front-end-cable
+18	Wire, 0.5 mm², #000070	0	m	from-hazard, indicator-front-wire, indicator-front-wire-clone, indicators-from-column, indicators-from-column-clone, indicators-to-fellten, indicators-to-fellten-clone, switches-to-front-end
+19	Wire, 0.5 mm², BG	0	m	relay-to-front-end
 20	Wire, 0.5 mm², BK	0	m	fusebox-to-switches, fusebox-to-switches-clone, rear-end-cable
-21	Wire, 0.5 mm², BN	0	m	front-end-cable, fusebox-relay-cable, ignition, rear-end-cable
+21	Wire, 0.5 mm², BN	0	m	fusebox-relay-cable, ignition, illumination-to-fellten, illumination-to-fellten-clone, illumination-to-front, illumination-to-front-clone, illumination-to-rear, illumination-to-rear-clone, rear-end-cable, switches-to-front-end
 22	Wire, 0.5 mm², BNGN	0	m	col-to-wiper-motor-cable, col-wiper-cable
 23	Wire, 0.5 mm², BU	0	m	col-ind-hilo-horn-stalk-cable, from-hazard, indicators-from-column, indicators-from-column-clone, indicators-to-fellten, indicators-to-fellten-clone
 24	Wire, 0.5 mm², BUGN	0	m	col-to-wiper-motor-cable, col-wiper-cable
 25	Wire, 0.5 mm², BURD	0	m	col-ind-hilo-horn-stalk-cable
 26	Wire, 0.5 mm², BUWH	0	m	col-ind-hilo-horn-stalk-cable
-27	Wire, 0.5 mm², GN	0	m	col-wiper-cable, column-to-fellten, column-to-fellten-clone, front-end-cable, fusebox-relay-cable, rear-end-cable
+27	Wire, 0.5 mm², GN	0	m	col-wiper-cable, column-to-fellten, column-to-fellten-clone, fusebox-relay-cable, rear-end-cable, relay-to-front-end
 28	Wire, 0.5 mm², GNBK	0	m	col-wiper-cable
 29	Wire, 0.5 mm², GNBN	0	m	col-ind-hilo-horn-stalk-cable
 30	Wire, 0.5 mm², GNOG	0	m	col-to-wiper-motor-cable
 31	Wire, 0.5 mm², GNRD	0	m	col-ind-hilo-horn-stalk-cable
 32	Wire, 0.5 mm², GNWH	0	m	col-ind-hilo-horn-stalk-cable, ignition
-33	Wire, 0.5 mm², LB	0	m	front-end-cable, indicator-front-wire, indicator-front-wire-clone
+33	Wire, 0.5 mm², LB	0	m	indicator-front-wire, indicator-front-wire-clone, switches-to-front-end
 34	Wire, 0.5 mm², OG	0	m	fusebox-relay-cable, rear-end-cable
-35	Wire, 0.5 mm², OL	0	m	column-to-fellten, column-to-fellten-clone, column-to-relay, front-end-cable, indicator-rear-wire, indicator-rear-wire-clone, rear-end-cable
+35	Wire, 0.5 mm², OL	0	m	column-to-fellten, column-to-fellten-clone, column-to-relay, indicator-rear-wire, indicator-rear-wire-clone, rear-end-cable, relay-to-front-end
 36	Wire, 0.5 mm², PK	0	m	switch-to-column
 37	Wire, 0.5 mm², RD	0	m	blinkers-to-switches, fusebox-relay-cable, fusebox-to-blinkers, fusebox-to-blinkers-clone, fusebox-to-switches, fusebox-to-switches-clone, switch-to-column
 38	Wire, 0.5 mm², RDGN	0	m	col-to-wiper-motor-cable, col-wiper-cable
