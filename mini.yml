@@ -142,6 +142,14 @@ connectors:
     notes: 'loom indicator/hi-lo/horn stalk'
     pinlabels: [RIGHT-SIG,HORN-12v,HL-12v,LO-SIG,LEFT-SIG,HORN-SIG,IND-12v,NC,HI-SIG]
 
+  column-wipers-m:
+    <<: *lucas
+    notes: 'BMC column wiper/squirt stalk'
+    pinlabels: [WIPER-ONESHOT,SQUIRT-SIG,+12v,WIPER-2,WIPER-1]
+  column-wipers-f:
+    <<: *lucas
+    notes: 'BMC column wiper/squirt stalk'
+    pinlabels: [WIPER-ONESHOT,SQUIRT-SIG,+12v,WIPER-2,WIPER-1]
 
   # LOOM SECTION JOINS
   front-end-connector:
@@ -158,6 +166,12 @@ connectors:
     pinlabels: [IGN,START,SIDELIGHTS,HI-SIG,LEFT-SIG,RIGHT-SIG,REVERSE,BRAKE]    
 
   # ANCILLERIES
+  wipers-motor-connector:
+    <<: *lucas
+    notes: 'BMC  wiper motor connector'
+    pinlabels: [GROUND,WIPER-ONESHOT,WIPER-2,+12v,WIPER-1]
+
+
   radio-connector:
     <<: *dt-connector
     subtype: female
@@ -197,13 +211,23 @@ cables:
     wirelabels: [RIGHT-SIG,HORN-12v,HL-12v,LO-SIG,LEFT-SIG,HORN-SIG,IND-12v,HI-SIG]
     colors:     [GNWH     ,      VT,    BU,BUWH ,GNRD    ,VTBK    ,GNBN   ,BURD   ]
 
-  col-ign-cable:
+  column-to-relay:
     <<: *lucas-wire-bundle
     category: bundle
-    colors: [RD, OL, WH, WHRD]
-    wirelabels: [CHOKE-PWR,(TEMP-SND)-R1,(BRAKE-SW)-R2,START]
+    colors: [OL, WH]
+    wirelabels: [(TEMP-SND)-R1,(BRAKE-SW)-R2]
 
+  col-wiper-cable:
+    <<: *lucas-wire-bundle
+    category: bundle
+    colors: [ BNGN, GNBK, GN, BUGN,RDGN ]
+    wirelabels: [WIPER-ONESHOT,SQUIRT-SIG,+12v,WIPER-2,WIPER-1]
 
+  col-to-wiper-motor-cable:
+    <<: *lucas-wire-bundle
+    category: bundle
+    colors: [ BNGN, BUGN,GNOG,RDGN ]
+    wirelabels: [WIPER-ONESHOT,WIPER-2,+12v,WIPER-1 ]
 
   fusebox-relay-cable:
     <<: *lucas-wire-bundle
@@ -213,8 +237,8 @@ cables:
   switch-to-column:
     <<: *lucas-wire-bundle
     category: bundle
-    wirelabels: [ALT-PWR, SAFETY-SW]
-    colors: [RD,VT]
+    wirelabels: [ALT-PWR, POWER]
+    colors: [RD,PK]
   fusebox-to-switches:
     <<: *lucas-wire-bundle
     category: bundle
@@ -230,7 +254,13 @@ cables:
     category: bundle
     wirelabels: [HEADTURN-SIG,HAZARD]
     colors: [RD,RD]
-    
+  column-to-fellten:
+    <<: *lucas-wire-bundle
+    category: bundle
+    wirelabels: [ (TEMP-SND)-R1, IGN-SW-START, HIGH-BEAM-IND]
+    colors: [ OL, VT, GN]
+
+
   indicator-signal-wire:
     <<: *indicators
     category: bundle
@@ -271,8 +301,8 @@ cables:
 
   fusebox-to-column:
     gauge: 0.5 mm2
-    colors: [GN] 
-    wirelabels: [HORN-SW]       
+    colors: [RD, GN, "#000070"]
+    wirelabels: [CHOKE-PWR, HORN-SW, WIPER-PWR]
 
 #
 ### CONNECTIONS
@@ -283,7 +313,7 @@ connections:
 # FUSEBOX
   -
     - fusebox: [BRAKE]
-    - col-ign-cable: [CHOKE-PWR]
+    - fusebox-to-column: [CHOKE-PWR]
     - column-ignition-f: [+12V]
   -
     - fusebox: [IGN-SW, IGN-SW-IGN]
@@ -302,19 +332,19 @@ connections:
     - fusebox-relay-cable: [HORN-SW]  
     - relay-horn: [VIN]
   -  
-    - fusebox: [HORN]
-    - fusebox-to-column: [1]  
+    - fusebox: [HORN,WIPERS]
+    - fusebox-to-column: [1-2]
   -  
     - fusebox: [HEADLIGHTS,AC-HEAT]
-    - fusebox-to-switches.fusebox-to-switches-clone: [1-2]  
+    - fusebox-to-switches: [1-2]
   -  
     - fusebox: [TURN-SIG,HAZARD]
-    - fusebox-to-blinkers.fusebox-to-blinkers-clone: [TURN-SIG,HAZARD]  
+    - fusebox-to-blinkers: [TURN-SIG,HAZARD]
 # SWITCHES
 
   -
     - hazard-dash-switch.hazard-dash-switch-clone: [IND-RELAY-OUT]
-    - switch-to-column: [SAFETY-SW]
+    - switch-to-column: [POWER]
     - column-lights-indicators-f: [IND-12v]
   - 
     - column-lights-indicators-m: [1-7,9]
@@ -324,19 +354,22 @@ connections:
     - switch-to-column: [ALT-PWR]
     - column-lights-indicators-f: [HL-12v]
   -
-    - fusebox-to-switches: [AC-HEAT-PWR]
+    - fusebox-to-switches.fusebox-to-switches-clone: [AC-HEAT-PWR]
     - rear-demist-dash-switch: [IN]
   -
     - rear-demist-dash-switch: [OUT]
     - virtual-switch-to-x: [AC]
   -
-    - fusebox-to-switches: [HEADLIGHT-PWR]
+    - fusebox-to-switches.fusebox-to-switches-clone: [HEADLIGHT-PWR]
     - headlight-dash-switch: [IN]  
 
   # COLUMN
   -
-    - col-ign-cable: [START, (TEMP-SND)-R1,(BRAKE-SW)-R2]
-    - column-ignition-f: [START, R1, R2]
+    - column-to-relay: [(TEMP-SND)-R1,(BRAKE-SW)-R2]
+    - column-ignition-f: [R1, R2]
+  -
+    - column-to-fellten.column-to-fellten-clone: [(TEMP-SND)-R1,IGN-SW-START]
+    - column-ignition-f: [R1, START]
   # -
   #   - column-ignition-f
   #   - <==>
@@ -352,20 +385,38 @@ connections:
   - 
     - relay-to-column.relay-to-column-clone: [1-3]
     - column-lights-indicators-f: [LO-SIG,HI-SIG,HORN-SIG]
+  -
+    - column-to-fellten.column-to-fellten-clone: [HIGH-BEAM-IND]
+    - column-lights-indicators-f: [HI-SIG]
   - 
     - fusebox-to-column.fusebox-to-column-clone: [HORN-SW]
     - column-lights-indicators-f: [HORN-12v]
+  -
+    - fusebox-to-column.fusebox-to-column-clone: [WIPER-PWR]
+    - column-wipers-m: [+12v]
   - 
     - indicator-signal-wire.indicators-from-column: [LEFT-SIG-IND,RIGHT-SIG-IND]
     - column-lights-indicators-f: [LEFT-SIG,RIGHT-SIG]
 
+  -
+    - column-wipers-f : [1-5]
+    - col-wiper-cable: [1-5]
+#  -
+#     - column-wipers-m
+#     - <==>
+#     - column-wipers-f
+  -
+    - wipers-motor-connector: [ WIPER-ONESHOT,WIPER-2,+12v,WIPER-1 ]
+    - col-to-wiper-motor-cable:  [WIPER-ONESHOT,WIPER-2,+12v,WIPER-1 ]
+    - column-wipers-m:  [WIPER-ONESHOT,WIPER-2,+12v,WIPER-1 ]
+
   #  RELAYS: signals
   -
     - relay-ignition-1: [COIL+]  
-    - col-ign-cable: [(TEMP-SND)-R1]
+    - column-to-relay: [(TEMP-SND)-R1]
   -
     - relay-ignition-2: [COIL+]  
-    - col-ign-cable: [(BRAKE-SW)-R2]    
+    - column-to-relay: [(BRAKE-SW)-R2]    
   -  
     - relay-horn: [COIL+]
     - relay-to-column: [3]
@@ -394,10 +445,10 @@ connections:
 
   # BLINKERS
   - 
-    - fusebox-to-blinkers: [HAZARD]
+    - fusebox-to-blinkers.fusebox-to-blinkers-clone: [HAZARD]
     - blinker-hazard: [12v-IN]
   - 
-    - fusebox-to-blinkers: [TURN-SIG]
+    - fusebox-to-blinkers.fusebox-to-blinkers-clone: [TURN-SIG]
     - blinker-indicators: [12v-IN]
   -
     - blinker-indicators: [BLINK-OUT]
@@ -423,6 +474,11 @@ connections:
   -
     - indicator-signal-wire.indicators-to-fellten: [1,2]
     - fellten-connector: [ LEFT-SIG,RIGHT-SIG ]
+
+  -
+    - column-to-fellten: [ (TEMP-SND)-R1, IGN-SW-START, HIGH-BEAM-IND ]
+    - fellten-connector: [ IGN, START, HI-SIG ]
+
   -
     - indicator-rear-wire: [1-2]
     - ferrule.
