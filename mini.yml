@@ -1,5 +1,13 @@
 metadata:
- 
+
+#  FROM planning doc:
+
+#  Bonnet open sense
+#  Boot open sense switch
+#  door/trunk open earth+diode
+#
+#
+
   title: Jasper Mini
 
   authors:
@@ -7,9 +15,7 @@ metadata:
       name: T4
       date: 2025-09-20
 
-  template:
-    name: din-6771
-    sheetsize: A3
+
 
 templates: 
   - &lucas
@@ -75,12 +81,13 @@ connectors:
 
   fusebox:
     <<: *lucas 
-    pinlabels: 
-      # extra unfused 12V constant to use
-      - IGN-SW
-      - ALT-PWR
-      # constant 12v
+    pinlabels:
+      # constant 12v input
       - SOLENOID-PWR
+      # unfused 12V constant
+      - IGN-1-SRC
+      - IGN-2-SRC
+
       - HORN
       - FAN
       - DOME
@@ -88,12 +95,12 @@ connectors:
       - RADIO
       - CIG-LIGHTER
       - DOOR
-      - # brake + ign
+      # brake + ign
       - BRAKE
       - HEADLIGHTS
       - TRUNK
       # IGN-1
-      - IGN-SW-IGN
+      - IGN-1-FEED
       - RADIO-IGN
       - AC-HEAT
       - FUEL-PUMP
@@ -101,7 +108,7 @@ connectors:
       - WINDOW
       - TURN-SIG
       # IGN-2
-      - IGN-SW-ACC
+      - IGN-2-FEED
       - GAUGES
       - CRUISE
       - WIPERS
@@ -163,11 +170,26 @@ connectors:
   rear-end-connector:
     <<: *dt-connector
     subtype: female
-    pinlabels: [LEFT,RIGHT,SIDELIGHTS,BRAKE,REVERSE,BOOT-SENSE,LED-5v,LED-DATA]
+    pinlabels: [LEFT,RIGHT,SIDELIGHTS,BRAKE,REVERSE,BOOT-SENSE,BOOT-12v,LED-5v,LED-DATA]
+
+  #  Lock motor
+  #  door open light
+  # Doorcard lighting
+  door-connector:
+     <<: *dt-connector
+     subtype: female
+     pinlabels: [ACTUATOR-1234, DOOR-12v,DOOR-SENSE-GND,LED-5v,LED-DATA,GROUND]
+
   fellten-connector:
     <<: *dt-connector
     subtype: female
-    pinlabels: [IGN,START,SIDELIGHTS,HI-SIG,LEFT-SIG,RIGHT-SIG,REVERSE,BRAKE]    
+    notes: BMC1-LOOMC10 low-volt connector
+    pinlabels: [IGN,START,SIDELIGHTS,HI-SIG,LEFT-SIG,RIGHT-SIG,REVERSE,BRAKE]
+
+  # Fellten, upstream
+  # - brake transducer, inertia crash switch (already engine-side)
+  # - HV ptc connector
+
 
   # ANCILLERIES
   wipers-motor-connector:
@@ -175,11 +197,29 @@ connectors:
     notes: 'BMC  wiper motor connector'
     pinlabels: [GROUND,WIPER-ONESHOT,WIPER-2,+12v,WIPER-1]
 
+  wipers-squirt-connector:
+    <<: *lucas
+    notes: 'BMC windscreen washer squirt connector'
+    pinlabels: [GROUND,12v]
 
-  radio-connector:
+  brake-level-connector:
+    <<: *lucas
+    notes: 'BMC master cylinder fluid level connector - function TBC'
+    pinlabels: [A, B]
+
+  radio-connector-m:
     <<: *dt-connector
     subtype: female
-    pinlabels: [12v, 1-12v, GROUND, ILLUM,AMP-SIG]
+    pinlabels: [VOL-CONTROL, PHONE-MUTE, INVERT, +12v-CONSTANT, REMOTE-ON, ILLUM, +12v, GROUND ]
+  radio-connector-f:
+    <<: *dt-connector
+    subtype: female
+    pinlabels: [VOL-CONTROL, PHONE-MUTE, INVERT, +12v-CONSTANT, REMOTE-ON, ILLUM, +12v, GROUND ]
+  amplifier-connector:
+    <<: *dt-connector
+    subtype: female
+    pinlabels: [RCAs, FRONT-LR, FRONT-TWEETERS-LR, REAR-LR, SUB, +12v, REMOTE-ON, GROUND ]
+
   dome-dashcam-connector:
     <<: *dt-connector
     subtype: female
@@ -191,7 +231,16 @@ connectors:
   esp32-connector:
     <<: *dt-connector
     subtype: female
-    pinlabels: [12v, GROUND]    
+    #  switches/control/screen?
+    pinlabels: [12v, GROUND, CANBUS+, CANBUS-, RCA-IN ]
+
+
+
+  #  Alarm:
+  #  Siren / horn
+  #  Power
+  #  Indicators
+  #  Canbus / Immobiliser path?
   alarm-locks-connector:
     <<: *dt-connector
     subtype: female
@@ -214,31 +263,37 @@ cables:
     <<: *lucas-wire-bundle
     category: bundle
     wirelabels: [RIGHT-SIG,HORN-12v,HL-12v,LO-SIG,LEFT-SIG,HORN-SIG,IND-12v,HI-SIG]
-    colors:     [GNWH     ,      VT,    BU,BUWH ,GNRD    ,VTBK    ,GNBN   ,BURD   ]
+    colors:     [DGWH     ,      VT,    LB,BUWH ,DGRD    ,VTBK    ,GNBN   ,BURD   ]
 
   column-to-relay:
     <<: *lucas-wire-bundle
     category: bundle
-    colors: [OL, WH]
+    colors: [DG, WH]
     wirelabels: [(TEMP-SND)-R1,(BRAKE-SW)-R2]
 
   col-wiper-cable:
     <<: *lucas-wire-bundle
     category: bundle
-    colors: [ BNGN, GNBK, GN, BUGN,RDGN ]
+    colors: [ BNGN, GNBK, DG, BUGN,RDGN ]
     wirelabels: [WIPER-ONESHOT,SQUIRT-SIG,+12v,WIPER-2,WIPER-1]
+
+  col-squirt-cable:
+    <<: *lucas-wire-bundle
+    category: bundle
+    colors: [ BK, LB]
+    wirelabels: [GROUND, (OIL-SENDING)-SQUIRT ]
 
   col-to-wiper-motor-cable:
     <<: *lucas-wire-bundle
     category: bundle
-    colors: [ BNGN, BUGN,GNOG,RDGN ]
+    colors: [ BNLG, LBLG, LGOG, RDLG ]
     wirelabels: [WIPER-ONESHOT,WIPER-2,+12v,WIPER-1 ]
 
   fusebox-relay-cable:
     <<: *lucas-wire-bundle
     category: bundle
     colors: [RD, RD, RD, GN, BN, OG]
-    wirelabels: [IGN-SW,ALT-PWR,ALT-PWR-2,HORN-SW,IGN-SW-IGN,IGN-SW-ACC]
+    wirelabels: [IGN-SW,ALT-PWR,ALT-PWR-2,HORN-SW,IGN-SW-IGN,IGN-SW-ACC ]
   switch-to-column:
     <<: *lucas-wire-bundle
     category: bundle
@@ -263,25 +318,41 @@ cables:
     <<: *lucas-wire-bundle
     category: bundle
     wirelabels: [ (TEMP-SND)-R1, IGN-SW-START, HIGH-BEAM-IND]
-    colors: [ OL, VT, GN]
+    colors: [ DG, VT, GN]
+
+  radio-harness:
+    <<: *lucas-wire-bundle
+    category: bundle
+    wirelabels: [VOL-CONTROL, PHONE-MUTE, INVERT, +12v-CONSTANT, REMOTE-ON, ILLUM, +12v, GROUND ]
+    colors: [ WH,WH,WH,YE,BU,OG,RD,BK ]
+
+  #  Lighting:
+  #  Undercar F, R, L, R
+  #  doorcards x 4
+  #  Under dash
+  esp-lighting:
+    <<: *lucas-wire-bundle
+    category: bundle
+    wirelabels: [+5v, DATA, GROUND]
+    colors: [ RD,WH,GN ]
 
 
   indicator-signal-wire:
     <<: *indicators
     category: bundle
-    colors: [BU, "#000070"]
+    colors: [BU, DB]
     wirelabels: [LEFT-SIG-IND,RIGHT-SIG-IND]
 
   indicator-front-wire:
     <<: *indicators
     category: bundle
-    colors: [LB, "#000070"]
+    colors: [LB, DB ]
     wirelabels: [LEFT-FRONT-SIG,RIGHT-FRONT-SIG]
 
   indicator-rear-wire:
     <<: *indicators
     category: bundle
-    colors: [YE, OL]
+    colors: [YE, DG]
     wirelabels: [LEFT-REAR-TURN,RIGHT-REAR-TURN]
 
   illumination-to-fellten:
@@ -303,12 +374,12 @@ cables:
   switches-to-front-end:
     <<: *lucas-wire-bundle
     category: bundle
-    colors: [LB, "#000070", BN]
+    colors: [LB, DB, BN]
     wirelabels: [LEFT-FRONT-SIG,RIGHT-FRONT-SIG,FRONT-PARK]
   rear-end-cable:
     <<: *lucas-wire-bundle
     category: bundle
-    colors: [YE, OL, BN, OG, GN, OL,BK,BK,BK]
+    colors: [YE, DG, BN, OG, GN, DG,BK,BK,BK]
     wirelabels: [LEFT-REAR-TURN,RIGHT-REAR-TURN,(LEFT)-TAIL-PARK,THIRD-BRAKE,(LEFT)-BACKUP,BOOT-SENSE,LED-5v,LED-DATA]
   relay-to-column:
     gauge: 0.5 mm2
@@ -321,7 +392,7 @@ cables:
 
   fusebox-to-column:
     gauge: 0.5 mm2
-    colors: [PK, GN, "#000070"]
+    colors: [PK, GN, DB]
     wirelabels: [IGNITION-SW-COIL, HORN-SW, WIPER-PWR]
 
 #
@@ -336,11 +407,11 @@ connections:
     - fusebox-to-column: [IGNITION-SW-COIL]
     - column-ignition-f: [+12V]
   -
-    - fusebox: [IGN-SW, IGN-SW-IGN]
+    - fusebox: [IGN-1-SRC, IGN-1-FEED]
     - fusebox-relay-cable: [IGN-SW, IGN-SW-IGN]
     - relay-ignition-1: [VIN, VOUT]
   -
-    - fusebox: [ALT-PWR, IGN-SW-ACC]
+    - fusebox: [IGN-2-SRC, IGN-2-FEED]
     - fusebox-relay-cable: [ALT-PWR, IGN-SW-ACC]
     - relay-ignition-2: [VIN, VOUT]
   -
@@ -425,6 +496,9 @@ connections:
   -
     - fusebox-to-column.fusebox-to-column-clone: [WIPER-PWR]
     - column-wipers-m: [+12v]
+  -
+    - col-squirt-cable: [(OIL-SENDING)-SQUIRT]
+    - column-wipers-m: [SQUIRT-SIG]
   - 
     - indicator-signal-wire.indicators-from-column: [LEFT-SIG-IND,RIGHT-SIG-IND]
     - column-lights-indicators-f: [LEFT-SIG,RIGHT-SIG]
@@ -490,6 +564,10 @@ connections:
     - blinkers-to-switches: 2
     - hazard-dash-switch: [HAZ-RELAY-IN]
 
+# RADIO
+  -
+    - radio-connector-m: [1-8]
+    - radio-harness: [1-8]
 
   # LOOM CONNECTORS
   - 
