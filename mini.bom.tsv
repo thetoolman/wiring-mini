@@ -7,7 +7,7 @@ Id	Description	Qty	Unit	Designators
 6	Connector, Lucas, male, 3 pins	1		headlight-dash-switch
 7	Connector, Lucas, male, 4 pins	2		column-ignition-m, rear-demist-dash-switch
 8	Connector, Lucas, male, 5 pins	3		column-wipers-f, column-wipers-m, wipers-motor-connector
-9	Connector, Lucas, male, 6 pins	2		hazard-dash-switch, hazard-dash-switch-clone
+9	Connector, Lucas, male, 6 pins	1		hazard-dash-switch
 10	Connector, Lucas, male, 9 pins	1		column-lights-indicators-m
 11	Connector, blinker, male, 2 pins	2		blinker-hazard, blinker-indicators
 12	Connector, female, 8 pins	1		radio-connector-m
@@ -17,7 +17,7 @@ Id	Description	Qty	Unit	Designators
 16	Connector, relay, male, 4 pins	5		relay-headlights-high, relay-headlights-low, relay-horn, relay-ignition-1, relay-ignition-2
 17	Wire, EZ wire, BG	0	m	relay-to-column, relay-to-column-clone, relay-to-front-end
 18	Wire, EZ wire, BK	0	m	col-squirt-cable, fusebox-to-switches, fusebox-to-switches-clone, radio-harness, rear-end-cable
-19	Wire, EZ wire, BN	0	m	fusebox-relay-cable, illumination-to-fellten, illumination-to-fellten-clone, illumination-to-front, illumination-to-front-clone, illumination-to-rear, illumination-to-rear-clone, rear-end-cable, switches-to-front-end
+19	Wire, EZ wire, BN	0	m	blinkers-to-switches, fusebox-relay-cable, fusebox-to-blinkers, fusebox-to-blinkers-clone, illumination-to-fellten, illumination-to-fellten-clone, illumination-to-front, illumination-to-front-clone, illumination-to-rear, illumination-to-rear-clone, rear-end-cable, switches-to-front-end
 20	Wire, EZ wire, BU	0	m	from-hazard, indicators-from-column, indicators-from-column-clone, indicators-to-fellten, indicators-to-fellten-clone, radio-harness
 21	Wire, EZ wire, BURD	0	m	col-ind-hilo-horn-stalk-cable
 22	Wire, EZ wire, BUWH	0	m	col-ind-hilo-horn-stalk-cable
@@ -31,9 +31,9 @@ Id	Description	Qty	Unit	Designators
 30	Wire, EZ wire, OG	0	m	fusebox-relay-cable, fusebox-to-switches, fusebox-to-switches-clone, radio-harness, rear-end-cable
 31	Wire, EZ wire, OL	0	m	relay-to-column, relay-to-column-clone, relay-to-front-end
 32	Wire, EZ wire, PK	0	m	fusebox-to-column, fusebox-to-column-clone, switch-to-column
-33	Wire, EZ wire, RD	0	m	blinkers-to-switches, fusebox-relay-cable, fusebox-to-blinkers, fusebox-to-blinkers-clone, fusebox-to-switches, fusebox-to-switches-clone, radio-harness, rear-end-cable, switch-to-column
+33	Wire, EZ wire, RD	0	m	fusebox-relay-cable, fusebox-to-switches, fusebox-to-switches-clone, radio-harness, rear-end-cable, switch-to-column
 34	Wire, EZ wire, TQ	0	m	rear-end-cable
-35	Wire, EZ wire, VT	0	m	col-ind-hilo-horn-stalk-cable, column-to-fellten, column-to-fellten-clone
+35	Wire, EZ wire, VT	0	m	blinkers-to-switches, col-ind-hilo-horn-stalk-cable, column-to-fellten, column-to-fellten-clone, fusebox-to-blinkers, fusebox-to-blinkers-clone
 36	Wire, EZ wire, VTBK	0	m	col-ind-hilo-horn-stalk-cable
 37	Wire, EZ wire, WH	0	m	column-to-relay, radio-harness
 38	Wire, EZ wire, YE	0	m	indicator-rear-wire, indicator-rear-wire-clone, radio-harness, rear-end-cable

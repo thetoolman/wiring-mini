@@ -313,14 +313,14 @@ cables:
   fusebox-to-blinkers:
     <<: *ez-wire
     category: bundle
-    wirelabels: [TURN-SIG,HAZARD]
-    colors: [RD,RD]
+    wirelabels: [TURN-FLASHER,HAZARD]
+    colors: [VT,BN]
 
   blinkers-to-switches:
     <<: *ez-wire
     category: bundle
-    wirelabels: [HEADTURN-SIG,HAZARD]
-    colors: [RD,RD]
+    wirelabels: [TURN-FLASHER,HAZARD]
+    colors: [VT,BN]
 
   column-to-fellten:
     <<: *ez-wire
@@ -430,15 +430,15 @@ connections:
     - fusebox-to-switches: [1-3]
   -  
     - fusebox: [TURN-SIG,HAZARD]
-    - fusebox-to-blinkers: [TURN-SIG,HAZARD]
+    - fusebox-to-blinkers: [TURN-FLASHER,HAZARD]
 # SWITCHES
 
   -
-    - hazard-dash-switch.hazard-dash-switch-clone: [IND-RELAY-OUT]
+    - hazard-dash-switch: [IND-RELAY-OUT]
     - switch-to-column: [POWER]
     - column-lights-indicators-f: [IND-12v]
   - 
-    - column-lights-indicators-m: [1-7,9]
+    - column-lights-indicators-m: [1-7,9] # 8 is N/C
     - col-ind-hilo-horn-stalk-cable: [1-8]
   - 
     - headlight-dash-switch: [ILLUM-OUT]
@@ -524,13 +524,13 @@ connections:
     - column-to-relay: [(BRAKE-SW)-R2]    
   -  
     - relay-horn: [COIL+]
-    - relay-to-column: [3]
+    - relay-to-column: [HORN]
   -  
     - relay-headlights-low: [COIL+]
-    - relay-to-column: [1]
+    - relay-to-column: [(LEFT)-LOW-BEAM]
   -  
     - relay-headlights-high: [COIL+]
-    - relay-to-column: [2]
+    - relay-to-column: [(LEFT)-HIGH-BEAM]
 
   # RELAYS: input
   -
@@ -553,7 +553,7 @@ connections:
     - fusebox-to-blinkers.fusebox-to-blinkers-clone: [HAZARD]
     - blinker-hazard: [12v-IN]
   - 
-    - fusebox-to-blinkers.fusebox-to-blinkers-clone: [TURN-SIG]
+    - fusebox-to-blinkers.fusebox-to-blinkers-clone: [TURN-FLASHER]
     - blinker-indicators: [12v-IN]
   -
     - blinker-indicators: [BLINK-OUT]
@@ -561,7 +561,7 @@ connections:
     - hazard-dash-switch: [IND-RELAY-IN]
   -
     - blinker-hazard: [BLINK-OUT]
-    - blinkers-to-switches: 2
+    - blinkers-to-switches: [HAZARD]
     - hazard-dash-switch: [HAZ-RELAY-IN]
 
 # RADIO
@@ -573,9 +573,11 @@ connections:
   - 
     - switches-to-front-end: [1-3]
     - front-end-connector: [1-3]
+
   -
     - relay-to-front-end: [(LEFT)-LOW-BEAM,(LEFT)-HIGH-BEAM,HORN]
     - front-end-connector: [LOW-BEAM,HIGH-BEAM,HORN]
+
   -
     - indicator-front-wire: [1-2]
     - ferrule.
@@ -587,6 +589,11 @@ connections:
     - indicator-signal-wire.indicators-to-fellten: [1,2]
     - fellten-connector: [ LEFT-SIG,RIGHT-SIG ]
   -
+    - indicator-rear-wire: [1-2]
+    - ferrule.
+    - rear-end-cable: [1-2]
+
+  -
     - illumination-to-fellten: [1]
     - fellten-connector: [ SIDELIGHTS ]
   -
@@ -597,16 +604,14 @@ connections:
     - illumination-to-rear: [1]
     - ferrule.
     - rear-end-cable: [ (LEFT)-TAIL-PARK ]
+
   -
     - column-to-fellten: [ (TEMP-SND)-R1, IGN-SW-START, HIGH-BEAM-IND ]
     - fellten-connector: [ IGN, START, HI-SIG ]
   -
     - fellten-connector: [ REVERSE, BRAKE]
     - rear-end-cable: [ (LEFT)-BACKUP, THIRD-BRAKE ]
-  -
-    - indicator-rear-wire: [1-2]
-    - ferrule.
-    - rear-end-cable: [1-2]
+
   -
     - rear-end-cable: [1-10]
     - rear-end-connector: [1-10]
