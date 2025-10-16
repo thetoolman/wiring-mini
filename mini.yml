@@ -456,13 +456,13 @@ connections:
     - switch-to-column: [ALT-PWR]
     - column-lights-indicators-f: [HL-12v]
   -
-    - fusebox-to-switches.fusebox-to-switches-clone: [AC-HEAT-PWR]
+    - fusebox-to-switches.fusebox-to-switches: [AC-HEAT-PWR]
     - rear-demist-dash-switch: [IN]
   -
     - rear-demist-dash-switch: [OUT]
     - rear-end-cable: [AC-HEAT]
   -
-    - fusebox-to-switches.fusebox-to-switches-clone: [HEADLIGHT-PWR]
+    - fusebox-to-switches.fusebox-to-switches: [HEADLIGHT-PWR]
     - headlight-dash-switch: [IN]  
 
   # COLUMN
@@ -470,25 +470,25 @@ connections:
     - column-to-relay: [(TEMP-SND)-R1,(BRAKE-SW)-R2]
     - column-ignition-f: [R1, R2]
   -
-    - column-to-fellten.column-to-fellten-clone: [(TEMP-SND)-R1,IGN-SW-START]
+    - column-to-fellten.column-to-fellten: [(TEMP-SND)-R1,IGN-SW-START]
     - column-ignition-f: [R1, START]
-  # -
-  #   - column-ignition-f
-  #   - <==>
-  #   - column-ignition-m
+  -
+    - column-ignition-f
+    - <==>
+    - column-ignition-m
   -
     - column-ignition-m: [1-4]
     - ignition: [1-4]
 
-  # -
-  #   - column-lights-indicators-f
-  #   - <==>
-  #   - column-lights-indicators-m
+  -
+    - column-lights-indicators-f
+    - <==>
+    - column-lights-indicators-m
   - 
     - relay-to-column.relay-to-column-clone: [1-3]
     - column-lights-indicators-f: [LO-SIG,HI-SIG,HORN-SIG]
   -
-    - column-to-fellten.column-to-fellten-clone: [HIGH-BEAM-IND]
+    - column-to-fellten.column-to-fellten: [HIGH-BEAM-IND]
     - column-lights-indicators-f: [HI-SIG]
   - 
     - fusebox-to-column.fusebox-to-column-clone: [HORN-SW]
@@ -506,10 +506,10 @@ connections:
   -
     - column-wipers-f : [1-5]
     - col-wiper-cable: [1-5]
-#  -
-#     - column-wipers-m
-#     - <==>
-#     - column-wipers-f
+  -
+     - column-wipers-m
+     - <==>
+     - column-wipers-f
   -
     - wipers-motor-connector: [ WIPER-ONESHOT,WIPER-2,+12v,WIPER-1 ]
     - col-to-wiper-motor-cable:  [WIPER-ONESHOT,WIPER-2,+12v,WIPER-1 ]
@@ -550,10 +550,10 @@ connections:
 
   # BLINKERS
   - 
-    - fusebox-to-blinkers.fusebox-to-blinkers-clone: [HAZARD]
+    - fusebox-to-blinkers.fusebox-to-blinkers: [HAZARD]
     - blinker-hazard: [12v-IN]
   - 
-    - fusebox-to-blinkers.fusebox-to-blinkers-clone: [TURN-FLASHER]
+    - fusebox-to-blinkers.fusebox-to-blinkers: [TURN-FLASHER]
     - blinker-indicators: [12v-IN]
   -
     - blinker-indicators: [BLINK-OUT]
@@ -586,16 +586,16 @@ connections:
     - indicator-signal-wire.from-hazard: [1,2]
     - hazard-dash-switch: [ LEFT-SIG,RIGHT-SIG ]
   -
-    - indicator-signal-wire.indicators-to-fellten: [1,2]
     - fellten-connector: [ LEFT-SIG,RIGHT-SIG ]
+    - indicator-signal-wire.indicators-to-fellten: [1,2]
   -
     - indicator-rear-wire: [1-2]
     - ferrule.
     - rear-end-cable: [1-2]
 
   -
-    - illumination-to-fellten: [1]
     - fellten-connector: [ SIDELIGHTS ]
+    - illumination-to-fellten: [1]
   -
     - illumination-to-front: [1]
     - ferrule.
@@ -606,8 +606,8 @@ connections:
     - rear-end-cable: [ (LEFT)-TAIL-PARK ]
 
   -
-    - column-to-fellten: [ (TEMP-SND)-R1, IGN-SW-START, HIGH-BEAM-IND ]
     - fellten-connector: [ IGN, START, HI-SIG ]
+    - column-to-fellten: [ (TEMP-SND)-R1, IGN-SW-START, HIGH-BEAM-IND ]
   -
     - fellten-connector: [ REVERSE, BRAKE]
     - rear-end-cable: [ (LEFT)-BACKUP, THIRD-BRAKE ]
