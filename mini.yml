@@ -442,13 +442,13 @@ connections:
     - col-ind-hilo-horn-stalk-cable: [1-8]
   - 
     - headlight-dash-switch: [ILLUM-OUT]
-    - illumination-to-fellten.illumination-to-fellten-clone: [ 1 ]
+    - illumination-to-fellten.illumination-to-fellten: [ 1 ]
   -
     - headlight-dash-switch: [ILLUM-OUT]
-    - illumination-to-front.illumination-to-front-clone: [ 1 ]
+    - illumination-to-front.illumination-to-front: [ 1 ]
   -
     - headlight-dash-switch: [ILLUM-OUT]
-    - illumination-to-rear.illumination-to-rear-clone: [ 1 ]
+    - illumination-to-rear.illumination-to-rear: [ 1 ]
 
 
   -
@@ -485,16 +485,16 @@ connections:
     - <==>
     - column-lights-indicators-m
   - 
-    - relay-to-column.relay-to-column-clone: [1-3]
+    - relay-to-column.relay-to-column: [1-3]
     - column-lights-indicators-f: [LO-SIG,HI-SIG,HORN-SIG]
   -
     - column-to-fellten.column-to-fellten: [HIGH-BEAM-IND]
     - column-lights-indicators-f: [HI-SIG]
   - 
-    - fusebox-to-column.fusebox-to-column-clone: [HORN-SW]
+    - fusebox-to-column.fusebox-to-column: [HORN-SW]
     - column-lights-indicators-f: [HORN-12v]
   -
-    - fusebox-to-column.fusebox-to-column-clone: [WIPER-PWR]
+    - fusebox-to-column.fusebox-to-column: [WIPER-PWR]
     - column-wipers-m: [+12v]
   -
     - col-squirt-cable: [(OIL-SENDING)-SQUIRT]
@@ -586,16 +586,16 @@ connections:
     - hazard-dash-switch: [ LEFT-SIG,RIGHT-SIG ]
     - indicator-signal-wire.from-hazard: [1,2]
   -
-    - fellten-connector: [ LEFT-SIG,RIGHT-SIG ]
     - indicator-signal-wire.indicators-to-fellten: [1,2]
+    - fellten-connector: [ LEFT-SIG,RIGHT-SIG ]
   -
     - indicator-rear-wire: [1-2]
     - ferrule.
     - rear-end-cable: [1-2]
 
   -
-    - fellten-connector: [ SIDELIGHTS ]
     - illumination-to-fellten: [1]
+    - fellten-connector: [ SIDELIGHTS ]
   -
     - illumination-to-front: [1]
     - ferrule.
@@ -621,17 +621,17 @@ connections:
 
   # indicator junction near switches
   -
-    - indicator-signal-wire.indicators-to-fellten-clone: [1-2]
     - indicator-ferrules: [1-2]
+    - indicator-signal-wire.indicators-to-fellten: [1-2]
   -
-    - indicator-signal-wire.indicators-from-column-clone: [1-2]
     - indicator-ferrules: [1-2]
+    - indicator-signal-wire.indicators-from-column: [1-2]
   -
-    - indicator-rear-wire.indicator-rear-wire-clone: [1-2]
     - indicator-ferrules: [1-2]
+    - indicator-rear-wire.indicator-rear-wire: [1-2]
   -
-    - indicator-front-wire.indicator-front-wire-clone: [1-2]
     - indicator-ferrules: [1-2]
+    - indicator-front-wire.indicator-front-wire: [1-2]
   -
     - from-hazard: [1-2]
     - indicator-ferrules: [1-2]
