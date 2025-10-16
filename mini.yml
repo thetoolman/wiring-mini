@@ -31,6 +31,10 @@ templates:
     category: bundle
     type: EZ wire
 
+  - &pvc-wire
+    type: PVC
+    category: bundle
+
   - &dt-connector
     type: DT-style connector
     subtype: male
@@ -181,13 +185,11 @@ connectors:
     subtype: female
     pinlabels: [LEFT,RIGHT,SIDELIGHTS,BRAKE,REVERSE,BOOT-SENSE,REAR-DEMIST,BOOT-12v,LED-5v,LED-DATA]
 
-  #  Lock motor
-  #  door open light
-  # Doorcard lighting
-  door-connector:
+
+  lighting-logic-connector:
      <<: *dt-connector
      subtype: female
-     pinlabels: [ACTUATOR-1234, DOOR-12v,DOOR-SENSE-GND,LED-5v,LED-DATA,GROUND]
+     pinlabels: [DOME, LEFT, RIGHT, BONNET, TRUNK, ALARM-SIG ]
 
   fellten-connector:
     <<: *dt-connector
@@ -199,6 +201,11 @@ connectors:
   # - brake transducer, inertia crash switch (already engine-side)
   # - HV ptc connector
 
+
+  open-sensor:
+    <<: *lucas-connector
+    notes: 'door, boot, bonnet earthing-open sensor'
+    pinlabels: [ SENSE(-) ]
 
   # ANCILLERIES
   wipers-motor-connector:
@@ -245,9 +252,17 @@ connectors:
   #  Power
   #  Indicators
   #  Canbus / Immobiliser path?
+  #  Lock motor
+  #  door open light
+  # Doorcard lighting
   alarm-locks-connector:
     subtype: female
-    pinlabels: [12v, GROUND]
+    pinlabels: [
+                DOORLOCK-GREEN, DOORLOCK-BLUE, DOORLOCK-WHITE, DOORLOCK-BROWN,
+                12v-CONST, 12v-IGN,
+                OPEN-SIG(GND), HORN-SIG+,
+                IMMOB-IN, IMMOB-OUT,
+                +5V, LED-DATA, GROUND]
 
 
 
@@ -307,9 +322,9 @@ cables:
   fusebox-to-switches:
     <<: *ez-wire
     category: bundle
-    wirelabels: [HEADLIGHT-PWR, AC-HEAT-PWR, BRAKE-SW-PWR]
+    wirelabels: [HEADLIGHT-PWR, AC-HEAT-PWR, BRAKE-SW-PWR, DOOR-LIGHTING-12v ] # wire undecided
+    colors: [RD,BK,OG, YE]
 
-    colors: [RD,BK,OG]
   fusebox-to-blinkers:
     <<: *ez-wire
     category: bundle
@@ -340,22 +355,21 @@ cables:
   #  Under dash
   esp-lighting:
     <<: *ez-wire
-    category: bundle
     wirelabels: [+5v, DATA, GROUND]
     colors: [ RD,WH,GN ]
 
   indicator-signal-wire:
     <<: *indicators
-    colors: [BU, DB]
     wirelabels: [LEFT-SIG-IND,RIGHT-SIG-IND]
+    colors: [BU, DB]
   indicator-front-wire:
     <<: *indicators
-    colors: [LB, DB ]
     wirelabels: [LEFT-FRONT-SIG,RIGHT-FRONT-SIG]
+    colors: [LB, DB ]
   indicator-rear-wire:
     <<: *indicators
-    colors: [YE, DG]
     wirelabels: [LEFT-REAR-TURN,RIGHT-REAR-TURN]
+    colors: [YE, DG]
 
   illumination-to-fellten:
     <<: *illumination
@@ -369,19 +383,27 @@ cables:
   
   relay-to-front-end:
     <<: *ez-wire
-    category: bundle
-    colors: [ BG, GN, OL]
     wirelabels: [ (LEFT)-LOW-BEAM,(LEFT)-HIGH-BEAM,HORN]
+    colors: [ BG, GN, OL]
 
   switches-to-front-end:
     <<: *ez-wire
-    category: bundle
-    colors: [LB, DB, BN]
-    wirelabels: [LEFT-FRONT-SIG,RIGHT-FRONT-SIG,FRONT-PARK]
+    wirelabels: [LEFT-FRONT-SIG,RIGHT-FRONT-SIG,FRONT-PARK, BONNET-SENSE]
+    colors: [LB, DB, BN, YEDG]
+
+  switches-to-door:
+    <<: *ez-wire
+    wirelabels: [DOOR-12v, OPEN-SIG(GND), DOORLOCK-GREEN, DOORLOCK-BLUE, DOORLOCK-WHITE, DOORLOCK-BROWN, LED-5v,LED-DATA,GROUND]
+    colors: [YE, YEDG, DG, BU, WH, BN, RD, GN, BK]
+
+  open-sense-wire:
+    <<: *pvc-wire
+    wirelabels: [SENSE(-)]
+    colors: [YEDG]
+
 
   rear-end-cable:
     <<: *ez-wire
-    category: bundle
     colors: [YE, DG, BN, OG, GN, YEDG,BK, TQ, RD,DG]
     wirelabels: [LEFT-REAR-TURN,RIGHT-REAR-TURN,(LEFT)-TAIL-PARK,THIRD-BRAKE,(LEFT)-BACKUP,BOOT-SENSE,AC-HEAT,TRUNK-LIGHT,LED-5v,LED-DATA]
 
@@ -456,13 +478,13 @@ connections:
     - switch-to-column: [ALT-PWR]
     - column-lights-indicators-f: [HL-12v]
   -
-    - fusebox-to-switches.fusebox-to-switches: [AC-HEAT-PWR]
+    - fusebox-to-switches: [AC-HEAT-PWR]
     - rear-demist-dash-switch: [IN]
   -
     - rear-demist-dash-switch: [OUT]
     - rear-end-cable: [AC-HEAT]
   -
-    - fusebox-to-switches.fusebox-to-switches: [HEADLIGHT-PWR]
+    - fusebox-to-switches: [HEADLIGHT-PWR]
     - headlight-dash-switch: [IN]  
 
   # COLUMN
@@ -571,9 +593,57 @@ connections:
 
   # LOOM CONNECTORS
   - 
-    - switches-to-front-end: [1-3]
-    - front-end-connector: [1-3]
+    - switches-to-front-end: [1-4]
+    - front-end-connector: [1-3,BONNET-SENSE]
 
+
+  - # doorlock actuators
+    - ferrule.
+    - switches-to-door.switches-to-door-left: [DOORLOCK-GREEN, DOORLOCK-BLUE, DOORLOCK-WHITE, DOORLOCK-BROWN]
+    - alarm-locks-connector: [DOORLOCK-GREEN, DOORLOCK-BLUE, DOORLOCK-WHITE, DOORLOCK-BROWN]
+  -
+    - alarm-locks-connector: [DOORLOCK-GREEN, DOORLOCK-BLUE, DOORLOCK-WHITE, DOORLOCK-BROWN]
+    - switches-to-door.switches-to-door-right: [DOORLOCK-GREEN, DOORLOCK-BLUE, DOORLOCK-WHITE, DOORLOCK-BROWN]
+    - ferrule.
+
+  -
+    - ferrule.
+    - open-sense-wire.in-to-door-left
+    - open-sensor.open-sensor-left
+    - switches-to-door-left: [OPEN-SIG(GND)]
+  -
+    - ferrule.
+    - switches-to-door-left: [DOOR-12v]
+
+  -
+    - switches-to-door-right: [OPEN-SIG(GND)]
+    - open-sensor.open-sensor-right
+    - open-sense-wire.in-to-door-right
+    - ferrule.
+  -
+    - switches-to-door-right: [DOOR-12v]
+    - ferrule.
+
+  -
+    - fusebox-to-switches: [ 4 ]
+    - ferrule.ferrule-windowsplit
+    - switches-to-door-right: [ DOOR-12v ]
+  -
+    - switches-to-door-left: [ DOOR-12v ]
+    - ferrule.ferrule-windowsplit
+
+  -
+    - lighting-logic-connector: [RIGHT]
+    - switches-to-door-right: [OPEN-SIG(GND)]
+  -
+    - lighting-logic-connector: [BONNET]
+    - switches-to-front-end: [BONNET-SENSE]
+  -
+    - lighting-logic-connector: [TRUNK]
+    - rear-end-cable: [BOOT-SENSE]
+  -
+    - switches-to-door-left: [ OPEN-SIG(GND) ]
+    - lighting-logic-connector: [ LEFT ]
   -
     - relay-to-front-end: [(LEFT)-LOW-BEAM,(LEFT)-HIGH-BEAM,HORN]
     - front-end-connector: [LOW-BEAM,HIGH-BEAM,HORN]
