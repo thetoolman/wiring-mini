@@ -556,13 +556,13 @@ connections:
     - fusebox-to-blinkers.fusebox-to-blinkers: [TURN-FLASHER]
     - blinker-indicators: [12v-IN]
   -
-    - blinker-indicators: [BLINK-OUT]
-    - blinkers-to-switches: 1
     - hazard-dash-switch: [IND-RELAY-IN]
+    - blinkers-to-switches: 1
+    - blinker-indicators: [BLINK-OUT]
   -
-    - blinker-hazard: [BLINK-OUT]
-    - blinkers-to-switches: [HAZARD]
     - hazard-dash-switch: [HAZ-RELAY-IN]
+    - blinkers-to-switches: [HAZARD]
+    - blinker-hazard: [BLINK-OUT]
 
 # RADIO
   -
@@ -583,8 +583,8 @@ connections:
     - ferrule.
     - switches-to-front-end: [1-2]
   -
-    - indicator-signal-wire.from-hazard: [1,2]
     - hazard-dash-switch: [ LEFT-SIG,RIGHT-SIG ]
+    - indicator-signal-wire.from-hazard: [1,2]
   -
     - fellten-connector: [ LEFT-SIG,RIGHT-SIG ]
     - indicator-signal-wire.indicators-to-fellten: [1,2]
@@ -633,8 +633,8 @@ connections:
     - indicator-front-wire.indicator-front-wire-clone: [1-2]
     - indicator-ferrules: [1-2]
   -
-    - indicator-ferrules: [1-2]
     - from-hazard: [1-2]
+    - indicator-ferrules: [1-2]
 
 
 
